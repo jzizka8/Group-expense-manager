@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -11,9 +12,14 @@ namespace Project.Models
 
         public int Id { get; set; }
         public string Name { get; set; }
+        [Required]
         public User Admin { get; set; }
+        [Required]
         public IEnumerable<User> Members { get; set; }
         public IEnumerable<Expense> Expenses { get; set; }
+        public Group()
+        { }
+            
         public Group(string name, User admin, IEnumerable<Expense> expenses)
         {
             Name = name;
