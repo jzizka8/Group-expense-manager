@@ -32,10 +32,18 @@ namespace Project
             try
             {
                 await userManager.RegisterUserAsync(UserNameTxt.Text, PasswordTxt.Text);
-            }catch(ArgumentException ex)
+                MessageBox.Show("You may proceed to log in", "Registration succesful",  MessageBoxButtons.OK, MessageBoxIcon.Information);
+                Dispose();
+            }
+            catch (ArgumentException ex)
             {
                 ErrReportLbl.Text = ex.Message;
             }
+        }
+
+        private void LoginBtn_Click(object sender, EventArgs e)
+        {
+            Dispose();
         }
     }
 }

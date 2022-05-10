@@ -29,9 +29,16 @@ namespace Project.BusinessLayer
         }
         public async Task<bool> LoginUser(string username, string password)
         {
-            return false;
+            User user = GetUser(username);
+            if(user == null)
+            {
+                return false;
+            }
+            PasswordHashing passwordHashing = new PasswordHashing(user.Salt);
+            return passwordHashing.HashedPassword(password) == user.Password;
+
         }
-        private User? GetUser(string username)
+         public User? GetUser(string username)
         {
             using(var db = new ExpenseDbContext())
             {

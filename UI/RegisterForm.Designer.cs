@@ -34,6 +34,7 @@
             this.PasswordTxt = new System.Windows.Forms.TextBox();
             this.RegisterBtn = new System.Windows.Forms.Button();
             this.ErrReportLbl = new System.Windows.Forms.Label();
+            this.LoginBtn = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // UserNameLbl
@@ -90,15 +91,25 @@
             this.ErrReportLbl.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.ErrReportLbl.Location = new System.Drawing.Point(121, 377);
             this.ErrReportLbl.Name = "ErrReportLbl";
-            this.ErrReportLbl.Size = new System.Drawing.Size(78, 32);
+            this.ErrReportLbl.Size = new System.Drawing.Size(0, 32);
             this.ErrReportLbl.TabIndex = 5;
-            this.ErrReportLbl.Text = "";
+            // 
+            // LoginBtn
+            // 
+            this.LoginBtn.Location = new System.Drawing.Point(39, 389);
+            this.LoginBtn.Name = "LoginBtn";
+            this.LoginBtn.Size = new System.Drawing.Size(136, 34);
+            this.LoginBtn.TabIndex = 6;
+            this.LoginBtn.Text = "Login instead";
+            this.LoginBtn.UseVisualStyleBackColor = true;
+            this.LoginBtn.Click += new System.EventHandler(this.LoginBtn_Click);
             // 
             // RegisterForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.LoginBtn);
             this.Controls.Add(this.ErrReportLbl);
             this.Controls.Add(this.RegisterBtn);
             this.Controls.Add(this.PasswordTxt);
@@ -120,5 +131,6 @@
         private TextBox PasswordTxt;
         private Button RegisterBtn;
         private Label ErrReportLbl;
+        private Button LoginBtn;
     }
 }
