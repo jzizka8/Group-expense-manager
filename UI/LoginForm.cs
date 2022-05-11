@@ -1,4 +1,5 @@
 using Project.BusinessLayer;
+using Project.Models;
 using Project.UI.Authorized;
 
 namespace Project
@@ -20,15 +21,23 @@ namespace Project
         {
             UserManager userManager = new();
             string username = UsernameLoginTxt.Text;
-            if (!await userManager.LoginUser(username, PasswordLoginTxt.Text))
+            if (!await userManager.LoginUserAsync(username, PasswordLoginTxt.Text))
             {
                 ErrLoginLbl.Text = "Login not succesful";
                 return;
             }
+            var user = userManager.GetUserAsync(username);
+            ShowAuthorized(await user);
+        }
 
-            Hide();
-            MainForm main = new(userManager.GetUser(username), this);
+        private void ShowAuthorized(User user)
+        {
+            MainForm main = new(user);
+            main.Location = Location;
+            main.StartPosition = FormStartPosition.Manual;
+            main.FormClosing += delegate { Show(); };
             main.Show();
+            Hide();
         }
     }
 }

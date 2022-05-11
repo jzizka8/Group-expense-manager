@@ -1,11 +1,4 @@
-﻿using Microsoft.AspNetCore.Cryptography.KeyDerivation;
-using Project.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Cryptography;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Project.Models;
 
 namespace Project.BusinessLayer
 {
@@ -13,40 +6,47 @@ namespace Project.BusinessLayer
     {
         public async Task RegisterUserAsync(string username, string password)
         {
-            if (GetUser(username) != null)
+            if (password.Length < 3)
+            {
+                throw new ArgumentException("Password is too short");
+            }
+            if (await GetUserAsync(username) != null)
             {
                 throw new ArgumentException("This username already exists");
             }
-            PasswordHashing passwordHashing = new PasswordHashing();
-            string hashedPassword = passwordHashing.HashedPassword(password);
+
+            PasswordHash passwordHashing = new PasswordHash();
+            string hashedPassword = passwordHashing.HashPassword(password);
             var salt = passwordHashing.Salt;
 
-            using(var db= new ExpenseDbContext())
+            using (var db = await Task.Run(() => new ExpenseDbContext()))
             {
                 db.Users.Add(new User(username, hashedPassword, salt));
                 await db.SaveChangesAsync();
             }
         }
-        public async Task<bool> LoginUser(string username, string password)
+
+        public async Task<bool> LoginUserAsync(string username, string password)
         {
-            User user = GetUser(username);
-            if(user == null)
+            User user = await GetUserAsync(username);
+            if (user == null)
             {
                 return false;
             }
-            PasswordHashing passwordHashing = new PasswordHashing(user.Salt);
-            return passwordHashing.HashedPassword(password) == user.Password;
 
+            PasswordHash passwordHashing = new(user.Salt);
+            return passwordHashing.HashPassword(password) == user.Password;
         }
-         public User? GetUser(string username)
+
+        public async Task<User> GetUserAsync(string username)
         {
-            using(var db = new ExpenseDbContext())
+            using (var db = await Task.Run(() => new ExpenseDbContext()))
             {
                 return db.Users.FirstOrDefault(u => u.UserName == username);
             }
         }
 
-        
+
 
     }
 }

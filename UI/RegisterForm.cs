@@ -1,13 +1,4 @@
 ﻿using Project.BusinessLayer;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 
 namespace Project
 {
@@ -22,17 +13,13 @@ namespace Project
         {
             ErrReportLbl.Text = "";
 
-            if (PasswordTxt.Text.Length < 3)
-            {
-                ErrReportLbl.Text = "Password too short";
-                return;
-            }
+
 
             UserManager userManager = new();
             try
             {
                 await userManager.RegisterUserAsync(UserNameTxt.Text, PasswordTxt.Text);
-                MessageBox.Show("You may proceed to log in", "Registration succesful",  MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("You may proceed to log in", "Registration succesful", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 Dispose();
             }
             catch (ArgumentException ex)
