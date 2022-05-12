@@ -1,10 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Project.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore.Proxies;
 
 namespace Project
 {
@@ -15,39 +11,41 @@ namespace Project
 
 
         public DbSet<Expense> Expenses { get; set; }
-        public DbSet<Group> Groups{ get; set; }
+        public DbSet<Group> Groups { get; set; }
         public DbSet<User> Users { get; set; }
         public ExpenseDbContext() : base()
         {
+            //Database.EnsureDeleted();
             Database.EnsureCreated();
+
         }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer(connectionString);
+            optionsBuilder.UseLazyLoadingProxies().UseSqlServer(connectionString);
 
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<User>()
                         .HasMany(u => u.Expenses)
-                        .WithMany(e => e.PaidFor);
-            
+                        .WithMany(e => e.Consumers);
+
             modelBuilder.Entity<User>()
                         .HasMany(u => u.ExpensesPaid)
                         .WithOne(e => e.Payer)
                         .OnDelete(DeleteBehavior.Restrict);
-            
+
             modelBuilder.Entity<User>()
                         .HasMany(u => u.ManagedGroups)
                         .WithOne(g => g.Admin)
                         .OnDelete(DeleteBehavior.Restrict);
-                
+
 
             modelBuilder.Entity<User>()
                         .HasMany(u => u.Groups)
                         .WithMany(g => g.Members);
-            
-           
+
+
         }
 
     }
