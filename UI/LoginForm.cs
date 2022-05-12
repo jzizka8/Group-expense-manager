@@ -11,23 +11,40 @@ namespace Project
             InitializeComponent();
         }
 
-        private void RegisterBtn_Click(object sender, EventArgs e)
-        {
-            RegisterForm register = new();
-            register.ShowDialog();
-        }
+
 
         private async void LoginBtn_Click(object sender, EventArgs e)
         {
+            InformLoginStart();
+
             UserManager userManager = new();
             string username = UsernameLoginTxt.Text;
-            if (!await userManager.LoginUserAsync(username, PasswordLoginTxt.Text))
+            var loginResult = await userManager.LoginUserAsync(username, PasswordLoginTxt.Text);
+
+            LoginProgress.Visible = false;
+
+            if (!loginResult)
             {
-                ErrLoginLbl.Text = "Login not succesful";
+                InformLoginFail();
                 return;
             }
-            var user = userManager.GetUserAsync(username);
-            ShowAuthorized(await user);
+
+            LoginStatusLbl.Text = "";
+            ShowAuthorized(await userManager.GetUserAsync(username));
+        }
+
+        private void InformLoginStart()
+        {
+            LoginStatusLbl.ForeColor = Color.Black;
+            LoginStatusLbl.Text = "loging in";
+
+            LoginProgress.Visible = true;
+        }
+
+        private void InformLoginFail()
+        {
+            LoginStatusLbl.ForeColor = Color.Red;
+            LoginStatusLbl.Text = "Login not succesful";
         }
 
         private void ShowAuthorized(User user)
@@ -38,6 +55,15 @@ namespace Project
             main.FormClosing += delegate { Show(); };
             main.Show();
             Hide();
+        }
+
+        private void RegisterLink_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            RegisterForm register = new();
+            register.Location = Location;
+            register.StartPosition = FormStartPosition.Manual;
+
+            register.ShowDialog();
         }
     }
 }

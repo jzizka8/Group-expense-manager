@@ -34,8 +34,9 @@
             this.PasswordLoginLbl = new System.Windows.Forms.Label();
             this.UsernameLoginTxt = new System.Windows.Forms.TextBox();
             this.PasswordLoginTxt = new System.Windows.Forms.TextBox();
-            this.RegisterBtn = new System.Windows.Forms.Button();
-            this.ErrLoginLbl = new System.Windows.Forms.Label();
+            this.LoginStatusLbl = new System.Windows.Forms.Label();
+            this.LoginProgress = new System.Windows.Forms.ProgressBar();
+            this.RegisterLink = new System.Windows.Forms.LinkLabel();
             this.SuspendLayout();
             // 
             // LoginBtn
@@ -81,32 +82,46 @@
             this.PasswordLoginTxt.Size = new System.Drawing.Size(150, 31);
             this.PasswordLoginTxt.TabIndex = 4;
             // 
-            // RegisterBtn
+            // LoginStatusLbl
             // 
-            this.RegisterBtn.Location = new System.Drawing.Point(19, 376);
-            this.RegisterBtn.Name = "RegisterBtn";
-            this.RegisterBtn.Size = new System.Drawing.Size(163, 34);
-            this.RegisterBtn.TabIndex = 5;
-            this.RegisterBtn.Text = "Register instead";
-            this.RegisterBtn.UseVisualStyleBackColor = true;
-            this.RegisterBtn.Click += new System.EventHandler(this.RegisterBtn_Click);
+            this.LoginStatusLbl.AutoSize = true;
+            this.LoginStatusLbl.ForeColor = System.Drawing.Color.Black;
+            this.LoginStatusLbl.Location = new System.Drawing.Point(345, 306);
+            this.LoginStatusLbl.Name = "LoginStatusLbl";
+            this.LoginStatusLbl.Size = new System.Drawing.Size(0, 25);
+            this.LoginStatusLbl.TabIndex = 6;
             // 
-            // ErrLoginLbl
+            // LoginProgress
             // 
-            this.ErrLoginLbl.AutoSize = true;
-            this.ErrLoginLbl.ForeColor = System.Drawing.Color.Red;
-            this.ErrLoginLbl.Location = new System.Drawing.Point(426, 395);
-            this.ErrLoginLbl.Name = "ErrLoginLbl";
-            this.ErrLoginLbl.Size = new System.Drawing.Size(0, 25);
-            this.ErrLoginLbl.TabIndex = 6;
+            this.LoginProgress.Location = new System.Drawing.Point(197, 359);
+            this.LoginProgress.MarqueeAnimationSpeed = 15;
+            this.LoginProgress.Maximum = 10;
+            this.LoginProgress.Name = "LoginProgress";
+            this.LoginProgress.Size = new System.Drawing.Size(333, 34);
+            this.LoginProgress.Step = 5;
+            this.LoginProgress.Style = System.Windows.Forms.ProgressBarStyle.Marquee;
+            this.LoginProgress.TabIndex = 7;
+            this.LoginProgress.Visible = false;
+            // 
+            // RegisterLink
+            // 
+            this.RegisterLink.AutoSize = true;
+            this.RegisterLink.Location = new System.Drawing.Point(197, 261);
+            this.RegisterLink.Name = "RegisterLink";
+            this.RegisterLink.Size = new System.Drawing.Size(345, 25);
+            this.RegisterLink.TabIndex = 8;
+            this.RegisterLink.TabStop = true;
+            this.RegisterLink.Text = "Do not have an account yet? Register here";
+            this.RegisterLink.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.RegisterLink_LinkClicked);
             // 
             // LoginForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
-            this.Controls.Add(this.ErrLoginLbl);
-            this.Controls.Add(this.RegisterBtn);
+            this.Controls.Add(this.RegisterLink);
+            this.Controls.Add(this.LoginProgress);
+            this.Controls.Add(this.LoginStatusLbl);
             this.Controls.Add(this.PasswordLoginTxt);
             this.Controls.Add(this.UsernameLoginTxt);
             this.Controls.Add(this.PasswordLoginLbl);
@@ -126,7 +141,8 @@
         private Label PasswordLoginLbl;
         private TextBox UsernameLoginTxt;
         private TextBox PasswordLoginTxt;
-        private Button RegisterBtn;
-        private Label ErrLoginLbl;
+        private Label LoginStatusLbl;
+        private ProgressBar LoginProgress;
+        private LinkLabel RegisterLink;
     }
 }
