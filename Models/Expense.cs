@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace Project.Models
 {
@@ -11,25 +6,26 @@ namespace Project.Models
     {
         public int Id { get; set; }
         [Required]
-        public User Payer { get; set; }
+        public virtual User Payer { get; set; }
         public string Description { get; set; }
-        [Required]
-        public Group Group { get; set; }
         [Required]
         public double Amount { get; set; }
         [Required]
-        public IEnumerable<User> PaidFor { get; set; }
+        public virtual Group Group { get; set; }
+        [Required]
+        public virtual IEnumerable<User> Consumers { get; set; }
         public Expense()
         {
 
         }
 
-        public Expense(User payer, string description, Group group, IEnumerable<User> paidFor)
+        public Expense(User payer, string description, Group group, double amount, IEnumerable<User> consumers)
         {
             Payer = payer;
             Description = description;
             Group = group;
-            PaidFor = paidFor;
+            Amount = amount;
+            Consumers = consumers;
         }
         public override bool Equals(object? obj)
         {
@@ -51,6 +47,14 @@ namespace Project.Models
         public override int GetHashCode()
         {
             return Id;
+        }
+
+        public override string ToString()
+        {
+            string consumersFormated = Consumers.Select(c => c.ToString())
+                                               .Aggregate((f, s) => $"{f}, {s}");
+
+            return $"{Payer} paid {Amount} for {Description:0.00} for {consumersFormated}";
         }
     }
 }

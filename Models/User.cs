@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace Project.Models
 {
@@ -11,21 +6,24 @@ namespace Project.Models
     {
         public int Id { get; set; }
         [Required]
-        public string UserName { get; set; }
+        public string Username { get; set; }
         [Required]
         public string Password { get; set; }
-        public byte[] Salt{ get; set; }
-        public IEnumerable<Group> Groups{ get; set; }
-        public IEnumerable<Group> ManagedGroups { get; set; }
-        public IEnumerable<Expense> ExpensesPaid{ get; set; }
-        public IEnumerable<Expense> Expenses{ get; set; }
-        public User(string userName, string password, byte[] salt)
+        public byte[] Salt { get; set; }
+        [Required]
+        public virtual ICollection<Group> Groups { get; set; }
+        public virtual ICollection<Group> ManagedGroups { get; set; }
+        public virtual ICollection<Expense> ExpensesPaid { get; set; }
+        public virtual ICollection<Expense> Expenses { get; set; }
+        public User(string username, string password, byte[] salt)
         {
-            UserName = userName;
+            Username = username;
             Password = password;
             Salt = salt;
             Groups = new HashSet<Group>();
-            Expenses = new List<Expense>();
+            ManagedGroups = new HashSet<Group>();
+            ExpensesPaid = new HashSet<Expense>();
+            Expenses = new HashSet<Expense>();
         }
         public override bool Equals(object? obj)
         {
@@ -47,6 +45,10 @@ namespace Project.Models
         public override int GetHashCode()
         {
             return Id;
+        }
+        public override string ToString()
+        {
+            return Username;
         }
     }
 }

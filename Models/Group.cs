@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace Project.Models
 {
@@ -13,24 +8,21 @@ namespace Project.Models
         public int Id { get; set; }
         public string Name { get; set; }
         [Required]
-        public User Admin { get; set; }
+        public virtual User Admin { get; set; }
         [Required]
-        public IEnumerable<User> Members { get; set; }
-        public IEnumerable<Expense> Expenses { get; set; }
+        public virtual ICollection<User> Members { get; set; }
+        public virtual ICollection<Expense> Expenses { get; set; }
         public Group()
         { }
-            
-        public Group(string name, User admin, IEnumerable<Expense> expenses)
+
+        public Group(string name, User admin)
         {
             Name = name;
             Admin = admin;
-            Members = new HashSet<User>();
-            Expenses = expenses;
+            Members = new HashSet<User>() { admin };
+            Expenses = new HashSet<Expense>();
         }
-        public Group(string name, User admin)
-            :this(name, admin, new HashSet<Expense>())
-        {
-        }
+
         public override bool Equals(object? obj)
         {
             if (ReferenceEquals(null, obj))
@@ -51,6 +43,10 @@ namespace Project.Models
         public override int GetHashCode()
         {
             return Id;
+        }
+        public override string ToString()
+        {
+            return Name;
         }
     }
 }
