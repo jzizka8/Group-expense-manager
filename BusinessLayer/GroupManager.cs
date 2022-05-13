@@ -28,10 +28,32 @@ namespace Project.BusinessLayer
             db.Groups.Add(group);
 
 
-            admin.ManagedGroups.Add(group);
+            /*admin.ManagedGroups.Add(group);
             admin.Groups.Add(group);
+            
+            */
             db.Update(admin);
 
+            await db.SaveChangesAsync();
+        }
+        public async Task AddGroupMembers(Group group, string usernames)
+        {
+            var usernamesSplit = usernames.Split(" ");
+
+            using var db = await Task.Run(() => new DataContext());
+
+
+            var trackedGroup = await db.Groups.FindAsync(group.Id);
+
+            var users = db.Users.Where(u => usernamesSplit.Contains(u.Username)).ToList();
+            
+            foreach(var user in users)
+            {
+                trackedGroup.Members.Add(user);
+            }
+
+            db.Update(trackedGroup);
+            
             await db.SaveChangesAsync();
         }
 
@@ -47,6 +69,13 @@ namespace Project.BusinessLayer
             Group trackedGroup = await db.Groups.FindAsync(group.Id);
             
             return trackedGroup.Members.ToList();
+        }
+
+        public async Task<bool> IsGroupAdmin(Group group, User user)
+        {
+            using var db = await Task.Run(() => new DataContext());
+            Group trackedGroup = await db.Groups.FindAsync(group.Id);
+            return trackedGroup.Admin.Equals(user);
         }
     }
 
