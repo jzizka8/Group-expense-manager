@@ -8,9 +8,11 @@ namespace Project.UI.Authorized
     public partial class MainForm : Form
     {
         public User User { get; set; }
+        public ICollection<Group> ManagedGroups { get; set; }
         public MainForm(User user)
         {
             User = user;
+            
             InitializeComponent();
             LogedUserLbl.Text = User.Username;
 
@@ -22,8 +24,10 @@ namespace Project.UI.Authorized
             var groupManager = new GroupManager();
             List<Group> groups = await groupManager.GetGroups(User);
 
-            listBox1.DataSource = groups;
-            GroupSelectComb.DataSource = groups; 
+            MembersListBox.DataSource = groups;
+            GroupSelectComb.DataSource = groups;
+
+
         }
 
         private void CreateGroupBtn_Click(object sender, EventArgs e)
@@ -40,8 +44,32 @@ namespace Project.UI.Authorized
 
         private void GroupSelectComb_SelectedIndexChanged(object sender, EventArgs e)
         {
+            //TODO:
+            //reinit expenses
+            //Show admin Buttons
+            Group group = (Group)(GroupSelectComb.SelectedValue);
+            DebugLabel.Text = group.Name + " " + group.Admin;
 
-            DebugLabel.Text = "dropdown " + GroupSelectComb.Text;
+        }
+
+        private void MainForm_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void ExportDebtsBtn_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void AddMemberBtn_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void AddExpenseBtn_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }
