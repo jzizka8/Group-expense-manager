@@ -1,4 +1,5 @@
-﻿using Project.Models;
+﻿using Microsoft.EntityFrameworkCore;
+using Project.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -76,6 +77,15 @@ namespace Project.BusinessLayer
             using var db = await Task.Run(() => new DataContext());
             Group trackedGroup = await db.Groups.FindAsync(group.Id);
             return trackedGroup.Admin.Equals(user);
+        }
+
+        public async Task<Group> GetEagerGroup(Group group)
+        {
+            using var db = await Task.Run(() => new DataContext());
+            return await db.Groups
+                .Include(g => g.Admin)
+                .Include(g => g.Members)
+                .FirstOrDefaultAsync(g => g.Equals(group));
         }
     }
 

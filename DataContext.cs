@@ -21,7 +21,8 @@ namespace Project
         }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseLazyLoadingProxies().UseSqlServer(connectionString);
+            optionsBuilder.UseLazyLoadingProxies()
+                .UseSqlServer(connectionString);
 
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
