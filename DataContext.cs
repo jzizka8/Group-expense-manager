@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Proxies;
 
 namespace Project
 {
-    public class ExpenseDbContext : DbContext
+    public class DataContext : DbContext
     {
         private string connectionString = @"server=(localdb)\MSSQLLocalDB;
                     Initial Catalog=ExpenseManagerDB; Integrated Security=true";
@@ -13,7 +13,7 @@ namespace Project
         public DbSet<Expense> Expenses { get; set; }
         public DbSet<Group> Groups { get; set; }
         public DbSet<User> Users { get; set; }
-        public ExpenseDbContext() : base()
+        public DataContext() : base()
         {
             //Database.EnsureDeleted();
             Database.EnsureCreated();

@@ -19,7 +19,7 @@ namespace Project.BusinessLayer
             string hashedPassword = passwordHashing.HashPassword(password);
             var salt = passwordHashing.Salt;
 
-            using (var db = await Task.Run(() => new ExpenseDbContext()))
+            using (var db = await Task.Run(() => new DataContext()))
             {
                 db.Users.Add(new User(username, hashedPassword, salt));
                 await db.SaveChangesAsync();
@@ -40,9 +40,9 @@ namespace Project.BusinessLayer
 
         public async Task<User> GetUserAsync(string username)
         {
-            using (var db = await Task.Run(() => new ExpenseDbContext()))
+            using (var db = await Task.Run(() => new DataContext()))
             {
-                return db.Users.FirstOrDefault(u => u.UserName == username);
+                return db.Users.FirstOrDefault(u => u.Username == username);
             }
         }
 

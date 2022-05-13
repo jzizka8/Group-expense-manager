@@ -21,7 +21,7 @@ namespace Project.BusinessLayer
                     " and can only contain alphanumeric characters");
             }
 
-            using var db = await Task.Run(() => new ExpenseDbContext());
+            using var db = await Task.Run(() => new DataContext());
 
             var admin = await db.Users.FindAsync(groupAdmin.Id);
             Group group = new Group(groupName, admin);
@@ -35,11 +35,18 @@ namespace Project.BusinessLayer
             await db.SaveChangesAsync();
         }
 
-        public async Task<List<Group>> GetGroups(User member)
+        public async Task<List<Group>> GetGroupsAsync(User member)
         {
-            using var db = await Task.Run(() => new ExpenseDbContext());
+            using var db = await Task.Run(() => new DataContext());
             User user = await db.Users.FindAsync(member.Id);
             return user.Groups.ToList();
+        }
+
+        public async Task<List<User>> GetGroupMembersAsync(Group group){
+            using var db = await Task.Run(() => new DataContext());
+            Group trackedGroup = await db.Groups.FindAsync(group.Id);
+            
+            return trackedGroup.Members.ToList();
         }
     }
 
