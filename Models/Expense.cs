@@ -9,7 +9,7 @@ namespace Project.Models
         public virtual User Payer { get; set; }
         public string Description { get; set; }
         [Required]
-        public double Amount { get; set; }
+        public decimal Amount { get; set; }
         [Required]
         public virtual Group Group { get; set; }
         [Required]
@@ -19,7 +19,7 @@ namespace Project.Models
 
         }
 
-        public Expense(User payer, string description, Group group, double amount, IEnumerable<User> consumers)
+        public Expense(User payer, string description, Group group, decimal amount, IEnumerable<User> consumers)
         {
             Payer = payer;
             Description = description;
