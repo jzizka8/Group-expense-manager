@@ -48,5 +48,11 @@ namespace Project.Models
         {
             return Name;
         }
+
+        public bool IsManagedBy(User user)
+        {
+            return Admin.Equals(user);
+        }
+
     }
 }
