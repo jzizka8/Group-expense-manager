@@ -8,51 +8,46 @@ namespace Project.UI.Authorized
     public partial class MainForm : Form
     {
         public User User { get; set; }
-        public Group Group { get => (Group)(GroupSelectComb.SelectedValue); }
+        public Group SelectedGroup { get => (Group)(GroupSelectComb.SelectedValue); }
         public ICollection<Group> ManagedGroups { get; set; }
         public MainForm(User user)
         {
-            User = user;
-            
             InitializeComponent();
+            
+            User = user;
             LogedUserLbl.Text = User.Username;
 
-            ReinitGroup();
+            RefreshGroupListAsync();
         }
 
-        private async void ReinitGroup()
+        private async void RefreshGroupListAsync()
         {
             var groupManager = new GroupManager();
             List<Group> groups = await groupManager.GetGroupsAsync(User);
 
-            GroupSelectComb.DataSource = groups;
+            GroupSelectComb.DataSource = groups.ToList();
         }
 
-        private async Task GroupChanged()
+        private async Task LoadGroupAsync()
         {
             var groupManager = new GroupManager();
-            Group group = (Group)GroupSelectComb.SelectedValue;
+            Group fetchedGroup = await groupManager.GetGroupEagerAsync(SelectedGroup);
 
-            MembersListBox.DataSource = await groupManager.GetGroupMembersAsync(group);
+            MembersListBox.DataSource = fetchedGroup.Members.ToList();
+            ExpensesListBox.DataSource = fetchedGroup.Expenses.ToList();
 
-            AddMemberBtn.Enabled = await groupManager.IsGroupAdmin(group, User);
+            AddMemberBtn.Enabled = fetchedGroup.Admin.Equals(User);
         }
-
-       
-
-
 
         private async void GroupSelectComb_SelectedIndexChanged(object sender, EventArgs e)
         {
             //TODO:
             //reinit expenses
             //Show admin Buttons
-            GroupManager groupManager = new();
-            Group group = (Group)(GroupSelectComb.SelectedValue);
-            group = await groupManager.GetEagerGroup(group);
-            DebugLabel.Text = group.Name + " " + group.Admin + " users:" + group.Members.Last().ToString() ;
-            await GroupChanged();
+            //Group SelectedGroup = await groupManager.GetEagerGroup(this.SelectedGroup);
+            await LoadGroupAsync();
         }
+
         #region Buttons Actions
         private void CreateGroupBtn_Click(object sender, EventArgs e)
         {
@@ -61,17 +56,16 @@ namespace Project.UI.Authorized
             groupCreate.StartPosition = FormStartPosition.Manual;
 
             groupCreate.ShowDialog();
-            ReinitGroup();
+            RefreshGroupListAsync();
         }
 
         private void AddMemberBtn_Click(object sender, EventArgs e)
         {
-            AddGroupMemberForm addMember = new(Group);
+            AddGroupMemberForm addMember = new(SelectedGroup);
             addMember.Location = Location;
             addMember.StartPosition = FormStartPosition.Manual;
 
             addMember.ShowDialog();
-            ReinitGroup();
         }
 
         private void AddExpenseBtn_Click(object sender, EventArgs e)

@@ -79,12 +79,16 @@ namespace Project.BusinessLayer
             return trackedGroup.Admin.Equals(user);
         }
 
-        public async Task<Group> GetEagerGroup(Group group)
+        public async Task<Group> GetGroupEagerAsync(Group group)
         {
             using var db = await Task.Run(() => new DataContext());
             return await db.Groups
                 .Include(g => g.Admin)
                 .Include(g => g.Members)
+                .Include(g=>g.Expenses)
+                    .ThenInclude(e=> e.Payer)
+                .Include(g=> g.Expenses)
+                    .ThenInclude(e=> e.Consumers)
                 .FirstOrDefaultAsync(g => g.Equals(group));
         }
     }
