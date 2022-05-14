@@ -65,20 +65,6 @@ namespace Project.BusinessLayer
             return user.Groups.ToList();
         }
 
-        public async Task<List<User>> GetGroupMembersAsync(Group group){
-            using var db = await Task.Run(() => new DataContext());
-            Group trackedGroup = await db.Groups.FindAsync(group.Id);
-            
-            return trackedGroup.Members.ToList();
-        }
-
-        public async Task<bool> IsGroupAdmin(Group group, User user)
-        {
-            using var db = await Task.Run(() => new DataContext());
-            Group trackedGroup = await db.Groups.FindAsync(group.Id);
-            return trackedGroup.Admin.Equals(user);
-        }
-
         public async Task<Group> GetGroupEagerAsync(Group group)
         {
             using var db = await Task.Run(() => new DataContext());
