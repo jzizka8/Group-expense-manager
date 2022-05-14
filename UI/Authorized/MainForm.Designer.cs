@@ -178,6 +178,7 @@
             this.AddExpenseBtn.TabIndex = 14;
             this.AddExpenseBtn.Text = "Add new expense";
             this.AddExpenseBtn.UseVisualStyleBackColor = true;
+            this.AddExpenseBtn.Click += new System.EventHandler(this.AddExpenseBtn_Click);
             // 
             // ImportExpensesBtn
             // 
