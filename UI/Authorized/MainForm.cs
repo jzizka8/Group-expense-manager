@@ -20,7 +20,7 @@ namespace Project.UI.Authorized
             RefreshGroupListAsync();
         }
 
-        private async void RefreshGroupListAsync()
+        private async Task RefreshGroupListAsync()
         {
             var groupManager = new GroupManager();
             List<Group> groups = await groupManager.GetGroupsAsync(User);
@@ -34,7 +34,7 @@ namespace Project.UI.Authorized
             selectedGroup = await groupManager.GetGroupEagerAsync((Group)(GroupSelectComb.SelectedValue));
         }
 
-        private void RefreshGroupControls()
+        private void AssignGroupControlsValues()
         {
             MembersListBox.DataSource = selectedGroup.Members.ToList();
             ExpensesListBox.DataSource = selectedGroup.Expenses.ToList();
@@ -42,17 +42,23 @@ namespace Project.UI.Authorized
             AddMemberBtn.Enabled = selectedGroup.IsManagedBy(User);
         }
 
-        private void ShowFormDialogAligned(Form form)
+        private async Task LoadDebtsListAsync()
         {
-            form.Location = Location;
-            form.StartPosition = FormStartPosition.Manual;
-            form.ShowDialog();
+            DebtCalculator debtCalculator = new();
+            DebtsListBox.DataSource = await Task.Run(() => debtCalculator.CalculateDebts(selectedGroup.Expenses));
         }
+
+        private async Task RefreshGroupAsync()
+        {
+            await LoadGroupAsync();
+            AssignGroupControlsValues();
+            await LoadDebtsListAsync();
+        }
+
         #region Event Handlers
         private async void GroupSelectComb_SelectedIndexChanged(object sender, EventArgs e)
         {
-            await LoadGroupAsync();
-            RefreshGroupControls();
+            await RefreshGroupAsync();
         }
         private void CreateGroupBtn_Click(object sender, EventArgs e)
         {
@@ -60,22 +66,31 @@ namespace Project.UI.Authorized
             ShowFormDialogAligned(createGroup);
             RefreshGroupListAsync();
         }
-        private void AddMemberBtn_Click(object sender, EventArgs e)
+        private async void AddMemberBtn_Click(object sender, EventArgs e)
         {
             Form addMember = new AddGroupMemberForm(selectedGroup);
             ShowFormDialogAligned(addMember);
 
+            await LoadGroupAsync();
+            AssignGroupControlsValues();
         }
-        private void AddExpenseBtn_Click(object sender, EventArgs e)
+        private async void AddExpenseBtn_Click(object sender, EventArgs e)
         {
             Form createExpense = new AddExpenseForm(selectedGroup.Members.FirstOrDefault(u => u.Equals(User)), selectedGroup);
             ShowFormDialogAligned(createExpense);
 
+            await RefreshGroupAsync();
         }
         private void ExportDebtsBtn_Click(object sender, EventArgs e)
         {
 
         }
         #endregion
+        private void ShowFormDialogAligned(Form form)
+        {
+            form.Location = Location;
+            form.StartPosition = FormStartPosition.Manual;
+            form.ShowDialog();
+        }
     }
 }
