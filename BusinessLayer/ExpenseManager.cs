@@ -22,14 +22,14 @@ namespace Project.BusinessLayer
 
             using var db = await Task.Run(() => new DataContext());
             
-            var trackedPayer =  db.Users.FindAsync(payer.Id);
-            var trackedGroup = db.Groups.FindAsync(group.Id);
-            var trackedConsumers =  Task.Run(()=>
+            var trackedPayer =  await db.Users.FindAsync(payer.Id);
+            var trackedGroup = await db.Groups.FindAsync(group.Id);
+            var trackedConsumers =  await Task.Run(()=>
                 consumers.Select(c => db.Users.Find(c.Id))
                             .ToList());
 
-            Expense expense = new Expense(await trackedPayer, description, await trackedGroup, amount,
-                                          await trackedConsumers);
+            Expense expense = new Expense(trackedPayer, description, trackedGroup, amount,
+                                          trackedConsumers);
 
             db.Add(expense);
             await db.SaveChangesAsync();
