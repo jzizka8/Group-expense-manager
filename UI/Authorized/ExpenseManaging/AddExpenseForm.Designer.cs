@@ -150,6 +150,11 @@
             0,
             0});
             this.AmountNum.Location = new System.Drawing.Point(236, 103);
+            this.AmountNum.Maximum = new decimal(new int[] {
+            1000000,
+            0,
+            0,
+            0});
             this.AmountNum.Name = "AmountNum";
             this.AmountNum.Size = new System.Drawing.Size(345, 31);
             this.AmountNum.TabIndex = 10;
