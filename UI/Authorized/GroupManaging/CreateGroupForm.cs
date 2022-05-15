@@ -30,7 +30,7 @@ namespace Project.UI.Authorized.GroupManaging
             }
             catch(ArgumentException ex)
             {
-                MessageBox.Show(ex.Message, "Try again", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
             MessageBox.Show( "You can now add members to your new group", "Succes", MessageBoxButtons.OK, MessageBoxIcon.Information);
