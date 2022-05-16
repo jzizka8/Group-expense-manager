@@ -21,6 +21,12 @@ namespace Project.UI.Authorized.ExpenseManaging
             this.group = group;
 
             ConsumersChListBox.DataSource = group.Members.ToList();
+
+            for (int i = 0; i < ConsumersChListBox.Items.Count; i++)
+            {
+                ConsumersChListBox.SetItemChecked(i, true);
+            }
+
             PayerComb.DataSource = group.Members.ToList();
 
             PayerComb.SelectedItem = defaultPayer;
