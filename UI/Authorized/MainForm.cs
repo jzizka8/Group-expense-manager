@@ -65,13 +65,13 @@ namespace Project.UI.Authorized
         private void CreateGroupBtn_Click(object sender, EventArgs e)
         {
             Form createGroup = new CreateGroupForm(User);
-            ShowFormDialogAligned(createGroup);
+            createGroup.ShowDialogAlignedWith(this);
             RefreshGroupListAsync();
         }
-        private async void AddMemberBtn_Click(object sender, EventArgs e)
+        private async void AddMemberBtn_Click(object sender, EventArgs -e)
         {
             Form addMember = new AddGroupMemberForm(selectedGroup);
-            ShowFormDialogAligned(addMember);
+            addMember.ShowDialogAlignedWith(this);
 
             await LoadGroupAsync();
             AssignGroupControlsValues();
@@ -79,7 +79,7 @@ namespace Project.UI.Authorized
         private async void AddExpenseBtn_Click(object sender, EventArgs e)
         {
             Form createExpense = new AddExpenseForm(selectedGroup.Members.FirstOrDefault(u => u.Equals(User)), selectedGroup);
-            ShowFormDialogAligned(createExpense);
+            createExpense.ShowDialogAlignedWith(this);
 
             await RefreshGroupAsync();
         }
@@ -112,16 +112,12 @@ namespace Project.UI.Authorized
 
             IDebt debt = (IDebt)DebtsListBox.SelectedItem;
             Form createExpense = new AddExpenseForm(debt, selectedGroup);
-            ShowFormDialogAligned(createExpense);
+            createExpense.ShowDialogAlignedWith(this);
 
             await RefreshGroupAsync();
         }
         #endregion
-        private void ShowFormDialogAligned(Form form)
-        {
-            form.Location = Location;
-            form.StartPosition = FormStartPosition.Manual;
-            form.ShowDialog();
-        }
+
+
     }
 }
