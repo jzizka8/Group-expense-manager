@@ -28,7 +28,9 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.DebugLabel = new System.Windows.Forms.Label();
+            this.components = new System.ComponentModel.Container();
+            System.Windows.Forms.ContextMenuStrip DebtListBoxContextMS;
+            this.toolStripMenuItemSettle = new System.Windows.Forms.ToolStripMenuItem();
             this.ExpensesLbl = new System.Windows.Forms.Label();
             this.MembersLbl = new System.Windows.Forms.Label();
             this.AddMemberBtn = new System.Windows.Forms.Button();
@@ -45,19 +47,27 @@
             this.GroupSelectComb = new System.Windows.Forms.ComboBox();
             this.CreateGroupBtn = new System.Windows.Forms.Button();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
+            DebtListBoxContextMS = new System.Windows.Forms.ContextMenuStrip(this.components);
+            DebtListBoxContextMS.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
             this.ExpensesBtnsTLP.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
             this.SuspendLayout();
             // 
-            // DebugLabel
+            // DebtListBoxContextMS
             // 
-            this.DebugLabel.AutoSize = true;
-            this.DebugLabel.Location = new System.Drawing.Point(873, 34);
-            this.DebugLabel.Name = "DebugLabel";
-            this.DebugLabel.Size = new System.Drawing.Size(59, 25);
-            this.DebugLabel.TabIndex = 2;
-            this.DebugLabel.Text = "label1";
+            DebtListBoxContextMS.ImageScalingSize = new System.Drawing.Size(24, 24);
+            DebtListBoxContextMS.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripMenuItemSettle});
+            DebtListBoxContextMS.Name = "DebtContextMenuStrip";
+            DebtListBoxContextMS.Size = new System.Drawing.Size(171, 36);
+            // 
+            // toolStripMenuItemSettle
+            // 
+            this.toolStripMenuItemSettle.Name = "toolStripMenuItemSettle";
+            this.toolStripMenuItemSettle.Size = new System.Drawing.Size(170, 32);
+            this.toolStripMenuItemSettle.Text = "Settle debt";
+            this.toolStripMenuItemSettle.Click += new System.EventHandler(this.DebtStripMenuItemSettle_Click);
             // 
             // ExpensesLbl
             // 
@@ -95,6 +105,7 @@
             // 
             // DebtsListBox
             // 
+            this.DebtsListBox.ContextMenuStrip = DebtListBoxContextMS;
             this.DebtsListBox.Dock = System.Windows.Forms.DockStyle.Fill;
             this.DebtsListBox.FormattingEnabled = true;
             this.DebtsListBox.ItemHeight = 25;
@@ -103,6 +114,8 @@
             this.DebtsListBox.Name = "DebtsListBox";
             this.DebtsListBox.Size = new System.Drawing.Size(316, 510);
             this.DebtsListBox.TabIndex = 10;
+            this.DebtsListBox.MouseDown += new System.Windows.Forms.MouseEventHandler(this.DebtsListBox_MouseDown);
+            this.DebtsListBox.MouseUp += new System.Windows.Forms.MouseEventHandler(this.DebtsListBox_MouseUp);
             // 
             // DebtsLbl
             // 
@@ -269,21 +282,19 @@
             this.ClientSize = new System.Drawing.Size(1311, 714);
             this.Controls.Add(this.tableLayoutPanel2);
             this.Controls.Add(this.tableLayoutPanel1);
-            this.Controls.Add(this.DebugLabel);
             this.Name = "MainForm";
             this.Text = "MainForm";
+            DebtListBoxContextMS.ResumeLayout(false);
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel1.PerformLayout();
             this.ExpensesBtnsTLP.ResumeLayout(false);
             this.tableLayoutPanel2.ResumeLayout(false);
             this.tableLayoutPanel2.PerformLayout();
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
         #endregion
-        private Label DebugLabel;
         private Label ExpensesLbl;
         private Label MembersLbl;
         private Button AddMemberBtn;
@@ -300,5 +311,6 @@
         private ComboBox GroupSelectComb;
         private Button CreateGroupBtn;
         private TableLayoutPanel tableLayoutPanel2;
+        private ToolStripMenuItem toolStripMenuItemSettle;
     }
 }

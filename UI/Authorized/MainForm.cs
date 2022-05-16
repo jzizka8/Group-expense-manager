@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Project.BusinessLayer;
+using Project.BusinessLayer.DebtManaging;
 using Project.Models;
 using Project.UI.Authorized.ExpenseManaging;
 using Project.UI.Authorized.GroupManaging;
@@ -54,6 +55,7 @@ namespace Project.UI.Authorized
             AssignGroupControlsValues();
             await LoadDebtsListAsync();
         }
+        
 
         #region Event Handlers
         private async void GroupSelectComb_SelectedIndexChanged(object sender, EventArgs e)
@@ -84,6 +86,35 @@ namespace Project.UI.Authorized
         private void ExportDebtsBtn_Click(object sender, EventArgs e)
         {
 
+        }
+        private void DebtsListBox_MouseDown(object sender, MouseEventArgs e)
+        {
+            if (e.Button != MouseButtons.Right)
+            {
+                return;
+            }
+
+            ListBox senderCasted = (ListBox)sender;
+
+            //select the item under the mouse pointer
+            senderCasted.SelectedIndex = senderCasted.IndexFromPoint(e.Location);
+        }
+
+        private void DebtsListBox_MouseUp(object sender, MouseEventArgs e)
+        {
+            ListBox senderCasted = (ListBox)sender;
+
+            // context menu for listbox won't show if nothing is selected
+            senderCasted.ContextMenuStrip.Visible = senderCasted.SelectedIndex != ListBox.NoMatches;
+        }
+        private async void DebtStripMenuItemSettle_Click(object sender, EventArgs e)
+        {
+
+            IDebt debt = (IDebt)DebtsListBox.SelectedItem;
+            Form createExpense = new AddExpenseForm(debt, selectedGroup);
+            ShowFormDialogAligned(createExpense);
+
+            await RefreshGroupAsync();
         }
         #endregion
         private void ShowFormDialogAligned(Form form)

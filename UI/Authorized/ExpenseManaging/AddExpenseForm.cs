@@ -1,4 +1,5 @@
 ﻿using Project.BusinessLayer;
+using Project.BusinessLayer.DebtManaging;
 using Project.Models;
 using System;
 using System.Collections.Generic;
@@ -17,20 +18,38 @@ namespace Project.UI.Authorized.ExpenseManaging
         private Group group;
         public AddExpenseForm(User defaultPayer, Group group)
         {
-            InitializeComponent();
-            this.group = group;
-
+            CommonCustomInit(defaultPayer, group);
             ConsumersChListBox.DataSource = group.Members.ToList();
 
             for (int i = 0; i < ConsumersChListBox.Items.Count; i++)
             {
                 ConsumersChListBox.SetItemChecked(i, true);
             }
+        }
+
+        public AddExpenseForm(IDebt debt, Group group)
+        {
+            CommonCustomInit(debt.Debtor, group);
+
+            ConsumersChListBox.DataSource = new List<User> { debt.Payee };
+            ConsumersChListBox.SetItemChecked(0, true);
+
+            //PayerComb.DataSource = new List<User>() { debt.Debtor };
+
+            AmountNum.Value = debt.Amount;
+            DescriptionTxt.Text = "Debt settlement";
+
+            ConsumersChListBox.Enabled = false;
+            PayerComb.Enabled = false;
+        }
+
+        private void CommonCustomInit(User defaultPayer, Group group)
+        {
+            InitializeComponent();
+            this.group = group;
 
             PayerComb.DataSource = group.Members.ToList();
-
             PayerComb.SelectedItem = defaultPayer;
-
         }
 
         private async void SubmitBtn_Click(object sender, EventArgs e)
