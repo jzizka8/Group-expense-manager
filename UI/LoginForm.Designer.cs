@@ -1,4 +1,4 @@
-﻿namespace Project
+﻿namespace Project.UI
 {
     partial class LoginForm
     {
@@ -41,7 +41,7 @@
             // 
             // LoginBtn
             // 
-            this.LoginBtn.Location = new System.Drawing.Point(380, 202);
+            this.LoginBtn.Location = new System.Drawing.Point(407, 202);
             this.LoginBtn.Name = "LoginBtn";
             this.LoginBtn.Size = new System.Drawing.Size(150, 34);
             this.LoginBtn.TabIndex = 0;
@@ -52,7 +52,7 @@
             // UsernameLoginLbl
             // 
             this.UsernameLoginLbl.AutoSize = true;
-            this.UsernameLoginLbl.Location = new System.Drawing.Point(213, 95);
+            this.UsernameLoginLbl.Location = new System.Drawing.Point(240, 95);
             this.UsernameLoginLbl.Name = "UsernameLoginLbl";
             this.UsernameLoginLbl.Size = new System.Drawing.Size(91, 25);
             this.UsernameLoginLbl.TabIndex = 1;
@@ -61,7 +61,7 @@
             // PasswordLoginLbl
             // 
             this.PasswordLoginLbl.AutoSize = true;
-            this.PasswordLoginLbl.Location = new System.Drawing.Point(213, 149);
+            this.PasswordLoginLbl.Location = new System.Drawing.Point(240, 149);
             this.PasswordLoginLbl.Name = "PasswordLoginLbl";
             this.PasswordLoginLbl.Size = new System.Drawing.Size(87, 25);
             this.PasswordLoginLbl.TabIndex = 2;
@@ -69,14 +69,14 @@
             // 
             // UsernameLoginTxt
             // 
-            this.UsernameLoginTxt.Location = new System.Drawing.Point(380, 97);
+            this.UsernameLoginTxt.Location = new System.Drawing.Point(407, 97);
             this.UsernameLoginTxt.Name = "UsernameLoginTxt";
             this.UsernameLoginTxt.Size = new System.Drawing.Size(150, 31);
             this.UsernameLoginTxt.TabIndex = 3;
             // 
             // PasswordLoginTxt
             // 
-            this.PasswordLoginTxt.Location = new System.Drawing.Point(380, 149);
+            this.PasswordLoginTxt.Location = new System.Drawing.Point(407, 149);
             this.PasswordLoginTxt.Name = "PasswordLoginTxt";
             this.PasswordLoginTxt.PasswordChar = '*';
             this.PasswordLoginTxt.Size = new System.Drawing.Size(150, 31);
@@ -86,14 +86,14 @@
             // 
             this.LoginStatusLbl.AutoSize = true;
             this.LoginStatusLbl.ForeColor = System.Drawing.Color.Black;
-            this.LoginStatusLbl.Location = new System.Drawing.Point(345, 306);
+            this.LoginStatusLbl.Location = new System.Drawing.Point(372, 306);
             this.LoginStatusLbl.Name = "LoginStatusLbl";
             this.LoginStatusLbl.Size = new System.Drawing.Size(0, 25);
             this.LoginStatusLbl.TabIndex = 6;
             // 
             // LoginProgress
             // 
-            this.LoginProgress.Location = new System.Drawing.Point(197, 359);
+            this.LoginProgress.Location = new System.Drawing.Point(224, 359);
             this.LoginProgress.MarqueeAnimationSpeed = 15;
             this.LoginProgress.Maximum = 10;
             this.LoginProgress.Name = "LoginProgress";
@@ -106,7 +106,7 @@
             // RegisterLink
             // 
             this.RegisterLink.AutoSize = true;
-            this.RegisterLink.Location = new System.Drawing.Point(197, 261);
+            this.RegisterLink.Location = new System.Drawing.Point(224, 261);
             this.RegisterLink.Name = "RegisterLink";
             this.RegisterLink.Size = new System.Drawing.Size(345, 25);
             this.RegisterLink.TabIndex = 8;

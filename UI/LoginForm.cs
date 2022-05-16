@@ -2,7 +2,7 @@ using Project.BusinessLayer;
 using Project.Models;
 using Project.UI.Authorized;
 
-namespace Project
+namespace Project.UI
 {
     public partial class LoginForm : Form
     {
@@ -50,20 +50,15 @@ namespace Project
         private void ShowAuthorized(User user)
         {
             MainForm main = new(user);
-            main.Location = Location;
-            main.StartPosition = FormStartPosition.Manual;
-            main.FormClosing += delegate { Show(); };
-            main.Show();
-            Hide();
+            this.ReplaceCurrentWith(main);
         }
 
         private void RegisterLink_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             RegisterForm register = new();
-            register.Location = Location;
-            register.StartPosition = FormStartPosition.Manual;
-
-            register.ShowDialog();
+            this.ReplaceCurrentWith(register);
         }
+
+        
     }
 }

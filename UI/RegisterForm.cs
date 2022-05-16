@@ -11,9 +11,10 @@ namespace Project
 
         private async void RegisterBtn_Click(object sender, EventArgs e)
         {
+            Button senderBtn = (Button)sender;
+            senderBtn.Enabled = false;
+
             ErrReportLbl.Text = "";
-
-
 
             UserManager userManager = new();
             try
@@ -26,11 +27,13 @@ namespace Project
             {
                 ErrReportLbl.Text = ex.Message;
             }
+
+            senderBtn.Enabled = true;
         }
 
-        private void LoginBtn_Click(object sender, EventArgs e)
+        private void LoginLinkLbl_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            Dispose();
+            Close();
         }
     }
 }
