@@ -5,9 +5,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Project.BusinessLayer
+namespace Project.BusinessLayer.DebtManaging
 {
-    public class Debt
+    public class Debt :IDebt
     {
         public User Debtor{ get; private set; }
         public User Payee { get; private set; }

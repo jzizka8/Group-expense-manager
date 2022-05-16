@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Project.BusinessLayer
+namespace Project.BusinessLayer.DebtManaging
 {
     public class DebtCalculator
     {
