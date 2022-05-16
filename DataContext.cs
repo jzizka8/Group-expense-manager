@@ -1,13 +1,13 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Project.Models;
 using Microsoft.EntityFrameworkCore.Proxies;
+using System.Configuration;
 
 namespace Project
 {
     public class DataContext : DbContext
     {
-        private string connectionString = @"server=(localdb)\MSSQLLocalDB;
-                    Initial Catalog=ExpenseManagerDB; Integrated Security=true";
+        private readonly string connectionString = ConfigurationManager.ConnectionStrings["ExpenseManager"].ConnectionString;
 
 
         public DbSet<Expense> Expenses { get; set; }
