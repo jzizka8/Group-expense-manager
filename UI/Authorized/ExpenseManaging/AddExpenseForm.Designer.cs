@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.Layout = new System.Windows.Forms.TableLayoutPanel();
+            this.FormLayout = new System.Windows.Forms.TableLayoutPanel();
             this.AmountLbl = new System.Windows.Forms.Label();
             this.ConsumersChListBox = new System.Windows.Forms.CheckedListBox();
             this.DescriptionLbl = new System.Windows.Forms.Label();
@@ -38,34 +38,34 @@
             this.ConsumerLabel = new System.Windows.Forms.Label();
             this.SubmitBtn = new System.Windows.Forms.Button();
             this.AmountNum = new System.Windows.Forms.NumericUpDown();
-            this.Layout.SuspendLayout();
+            this.FormLayout.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.AmountNum)).BeginInit();
             this.SuspendLayout();
             // 
             // Layout
             // 
-            this.Layout.ColumnCount = 2;
-            this.Layout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 40F));
-            this.Layout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 60F));
-            this.Layout.Controls.Add(this.AmountLbl, 0, 2);
-            this.Layout.Controls.Add(this.ConsumersChListBox, 1, 3);
-            this.Layout.Controls.Add(this.DescriptionLbl, 0, 1);
-            this.Layout.Controls.Add(this.DescriptionTxt, 1, 1);
-            this.Layout.Controls.Add(this.PayerLbl, 0, 0);
-            this.Layout.Controls.Add(this.PayerComb, 1, 0);
-            this.Layout.Controls.Add(this.ConsumerLabel, 0, 3);
-            this.Layout.Controls.Add(this.SubmitBtn, 1, 4);
-            this.Layout.Controls.Add(this.AmountNum, 1, 2);
-            this.Layout.Location = new System.Drawing.Point(40, 37);
-            this.Layout.Name = "Layout";
-            this.Layout.RowCount = 5;
-            this.Layout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 50F));
-            this.Layout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 50F));
-            this.Layout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 50F));
-            this.Layout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.Layout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 50F));
-            this.Layout.Size = new System.Drawing.Size(584, 512);
-            this.Layout.TabIndex = 0;
+            this.FormLayout.ColumnCount = 2;
+            this.FormLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 40F));
+            this.FormLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 60F));
+            this.FormLayout.Controls.Add(this.AmountLbl, 0, 2);
+            this.FormLayout.Controls.Add(this.ConsumersChListBox, 1, 3);
+            this.FormLayout.Controls.Add(this.DescriptionLbl, 0, 1);
+            this.FormLayout.Controls.Add(this.DescriptionTxt, 1, 1);
+            this.FormLayout.Controls.Add(this.PayerLbl, 0, 0);
+            this.FormLayout.Controls.Add(this.PayerComb, 1, 0);
+            this.FormLayout.Controls.Add(this.ConsumerLabel, 0, 3);
+            this.FormLayout.Controls.Add(this.SubmitBtn, 1, 4);
+            this.FormLayout.Controls.Add(this.AmountNum, 1, 2);
+            this.FormLayout.Location = new System.Drawing.Point(40, 37);
+            this.FormLayout.Name = "Layout";
+            this.FormLayout.RowCount = 5;
+            this.FormLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 50F));
+            this.FormLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 50F));
+            this.FormLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 50F));
+            this.FormLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.FormLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 50F));
+            this.FormLayout.Size = new System.Drawing.Size(584, 512);
+            this.FormLayout.TabIndex = 0;
             // 
             // AmountLbl
             // 
@@ -164,11 +164,11 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(670, 582);
-            this.Controls.Add(this.Layout);
+            this.Controls.Add(this.FormLayout);
             this.Name = "AddExpenseForm";
             this.Text = "AddExpenseForm";
-            this.Layout.ResumeLayout(false);
-            this.Layout.PerformLayout();
+            this.FormLayout.ResumeLayout(false);
+            this.FormLayout.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.AmountNum)).EndInit();
             this.ResumeLayout(false);
 
@@ -176,7 +176,7 @@
 
         #endregion
 
-        private TableLayoutPanel Layout;
+        private TableLayoutPanel FormLayout;
         private Label DescriptionLbl;
         private Label AmountLbl;
         private TextBox DescriptionTxt;
