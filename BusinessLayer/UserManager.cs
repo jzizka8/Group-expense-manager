@@ -1,12 +1,20 @@
 ﻿using Project.Models;
+using Regex = System.Text.RegularExpressions;
 
 namespace Project.BusinessLayer
 {
     public class UserManager
     {
+        private static readonly int MIN_GROUPNAME_LENGTH = 3;
+        // alpha numeric string with -_ of min length of 3
+        private static readonly Regex.Regex USERNAME_REGEX = new($"^[0-9a-zA-Z_-]{{{MIN_GROUPNAME_LENGTH},}}$");
         public async Task RegisterUserAsync(string username, string password)
         {
-            if (password.Length < 3)
+            if (!USERNAME_REGEX.IsMatch(username))
+            {
+                throw new ArgumentException("Username is either too short or contains illegal characters");
+            }
+            if (password.Length<3)
             {
                 throw new ArgumentException("Password is too short");
             }
@@ -45,8 +53,5 @@ namespace Project.BusinessLayer
                 return db.Users.FirstOrDefault(u => u.Username == username);
             }
         }
-
-
-
     }
 }
