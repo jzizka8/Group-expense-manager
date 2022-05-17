@@ -18,7 +18,7 @@ namespace Project.UI.Authorized
             User = user;
             LogedUserLbl.Text = User.Username;
 
-            RefreshGroupListAsync();
+            _ = RefreshGroupListAsync();
         }
 
         private async Task RefreshGroupListAsync()
@@ -62,13 +62,13 @@ namespace Project.UI.Authorized
         {
             await RefreshGroupAsync();
         }
-        private void CreateGroupBtn_Click(object sender, EventArgs e)
+        private async void CreateGroupBtn_Click(object sender, EventArgs e)
         {
             Form createGroup = new CreateGroupForm(User);
             createGroup.ShowDialogAlignedWith(this);
-            RefreshGroupListAsync();
+            await RefreshGroupListAsync();
         }
-        private async void AddMemberBtn_Click(object sender, EventArgs -e)
+        private async void AddMemberBtn_Click(object sender, EventArgs e )
         {
             Form addMember = new AddGroupMemberForm(selectedGroup);
             addMember.ShowDialogAlignedWith(this);
