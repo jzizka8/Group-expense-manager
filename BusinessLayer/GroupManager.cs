@@ -13,9 +13,10 @@ namespace Project.BusinessLayer
     {
         private static readonly int MIN_GROUPNAME_LENGTH = 3;
         // alpha numeric string with min length of 3
-        private static readonly Regex.Regex groupNameRegex = new($"^[0-9a-zA-Z]{{{MIN_GROUPNAME_LENGTH},}}$");
+        private static readonly Regex.Regex groupNameRegex = new($"^[ 0-9a-zA-Z]{{{MIN_GROUPNAME_LENGTH},}}$");
         public async Task CreateGroup(string groupName, User groupAdmin)
         {
+            groupName = groupName.Trim();
             if (!groupNameRegex.IsMatch(groupName))
             {
                 throw new ArgumentException($"Group name has to contain atleast {MIN_GROUPNAME_LENGTH} characters" +
