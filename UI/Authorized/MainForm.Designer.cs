@@ -41,12 +41,15 @@
             this.ExpensesBtnsTLP = new System.Windows.Forms.TableLayoutPanel();
             this.AddExpenseBtn = new System.Windows.Forms.Button();
             this.ImportExpensesBtn = new System.Windows.Forms.Button();
+            this.ExportExpensesBtn = new System.Windows.Forms.Button();
             this.MembersListBox = new System.Windows.Forms.ListBox();
             this.ExpensesListBox = new System.Windows.Forms.ListBox();
             this.LogedUserLbl = new System.Windows.Forms.Label();
             this.GroupSelectComb = new System.Windows.Forms.ComboBox();
             this.CreateGroupBtn = new System.Windows.Forms.Button();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
+            this.importExpensesOpenFileDialog = new System.Windows.Forms.OpenFileDialog();
+            this.exportExpensesSaveFileDialog = new System.Windows.Forms.SaveFileDialog();
             DebtListBoxContextMS = new System.Windows.Forms.ContextMenuStrip(this.components);
             DebtListBoxContextMS.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
@@ -166,28 +169,29 @@
             // 
             // ExpensesBtnsTLP
             // 
-            this.ExpensesBtnsTLP.ColumnCount = 2;
-            this.ExpensesBtnsTLP.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.ExpensesBtnsTLP.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.ExpensesBtnsTLP.Controls.Add(this.AddExpenseBtn, 1, 0);
-            this.ExpensesBtnsTLP.Controls.Add(this.ImportExpensesBtn, 0, 0);
+            this.ExpensesBtnsTLP.ColumnCount = 3;
+            this.ExpensesBtnsTLP.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
+            this.ExpensesBtnsTLP.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
+            this.ExpensesBtnsTLP.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
+            this.ExpensesBtnsTLP.Controls.Add(this.AddExpenseBtn, 0, 0);
+            this.ExpensesBtnsTLP.Controls.Add(this.ImportExpensesBtn, 1, 0);
+            this.ExpensesBtnsTLP.Controls.Add(this.ExportExpensesBtn, 2, 0);
             this.ExpensesBtnsTLP.Dock = System.Windows.Forms.DockStyle.Fill;
             this.ExpensesBtnsTLP.Location = new System.Drawing.Point(0, 552);
             this.ExpensesBtnsTLP.Margin = new System.Windows.Forms.Padding(0, 0, 0, 10);
             this.ExpensesBtnsTLP.Name = "ExpensesBtnsTLP";
             this.ExpensesBtnsTLP.RowCount = 1;
             this.ExpensesBtnsTLP.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.ExpensesBtnsTLP.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.ExpensesBtnsTLP.Size = new System.Drawing.Size(678, 56);
             this.ExpensesBtnsTLP.TabIndex = 15;
             // 
             // AddExpenseBtn
             // 
             this.AddExpenseBtn.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.AddExpenseBtn.Location = new System.Drawing.Point(349, 0);
+            this.AddExpenseBtn.Location = new System.Drawing.Point(10, 0);
             this.AddExpenseBtn.Margin = new System.Windows.Forms.Padding(10, 0, 10, 0);
             this.AddExpenseBtn.Name = "AddExpenseBtn";
-            this.AddExpenseBtn.Size = new System.Drawing.Size(319, 56);
+            this.AddExpenseBtn.Size = new System.Drawing.Size(206, 56);
             this.AddExpenseBtn.TabIndex = 14;
             this.AddExpenseBtn.Text = "Add new expense";
             this.AddExpenseBtn.UseVisualStyleBackColor = true;
@@ -196,13 +200,26 @@
             // ImportExpensesBtn
             // 
             this.ImportExpensesBtn.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.ImportExpensesBtn.Location = new System.Drawing.Point(10, 0);
+            this.ImportExpensesBtn.Location = new System.Drawing.Point(236, 0);
             this.ImportExpensesBtn.Margin = new System.Windows.Forms.Padding(10, 0, 10, 0);
             this.ImportExpensesBtn.Name = "ImportExpensesBtn";
-            this.ImportExpensesBtn.Size = new System.Drawing.Size(319, 56);
+            this.ImportExpensesBtn.Size = new System.Drawing.Size(206, 56);
             this.ImportExpensesBtn.TabIndex = 15;
             this.ImportExpensesBtn.Text = "Import Expenses";
             this.ImportExpensesBtn.UseVisualStyleBackColor = true;
+            this.ImportExpensesBtn.Click += new System.EventHandler(this.ImportExpensesBtn_Click);
+            // 
+            // ExportExpensesBtn
+            // 
+            this.ExportExpensesBtn.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.ExportExpensesBtn.Location = new System.Drawing.Point(462, 0);
+            this.ExportExpensesBtn.Margin = new System.Windows.Forms.Padding(10, 0, 10, 0);
+            this.ExportExpensesBtn.Name = "ExportExpensesBtn";
+            this.ExportExpensesBtn.Size = new System.Drawing.Size(206, 56);
+            this.ExportExpensesBtn.TabIndex = 16;
+            this.ExportExpensesBtn.Text = "Export Expenses";
+            this.ExportExpensesBtn.UseVisualStyleBackColor = true;
+            this.ExportExpensesBtn.Click += new System.EventHandler(this.ExportExpensesBtn_Click);
             // 
             // MembersListBox
             // 
@@ -274,6 +291,8 @@
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tableLayoutPanel2.Size = new System.Drawing.Size(678, 48);
             this.tableLayoutPanel2.TabIndex = 15;
+
+            
             // 
             // MainForm
             // 
@@ -312,5 +331,8 @@
         private Button CreateGroupBtn;
         private TableLayoutPanel tableLayoutPanel2;
         private ToolStripMenuItem toolStripMenuItemSettle;
+        private OpenFileDialog importExpensesOpenFileDialog;
+        private Button ExportExpensesBtn;
+        private SaveFileDialog exportExpensesSaveFileDialog;
     }
 }

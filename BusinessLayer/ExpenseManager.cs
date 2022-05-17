@@ -1,4 +1,5 @@
-﻿using Project.Models;
+﻿using Project.CsvReading;
+using Project.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,30 +10,121 @@ namespace Project.BusinessLayer
 {
     public class ExpenseManager
     {
-        public async Task AddExpense(User payer,Group group, string description, decimal amount, ICollection<User> consumers)
+        public async Task AddExpense(string payerStr, Group group, string description, string amountStr, IEnumerable<string> consumersStr)
         {
-            if(amount == 0)
+            UserManager userManager = new();
+
+            User payer = await userManager.GetUserAsync(payerStr);
+            decimal amount = decimal.Parse(amountStr);
+            List<User> consumers = new();
+            foreach (var item in consumersStr)
+            {
+                consumers.Add(await userManager.GetUserAsync(item));
+            }
+            
+
+            await AddExpense(payer, group, description, amount, consumers);
+        }
+        public async Task AddExpense(User payer,Group group, string description, decimal amount, IEnumerable<User> consumers)
+        {
+            await AddExpense(payer.Id, group.Id, description, amount, consumers.Select(c => c.Id).ToList());
+        }
+
+        public async Task AddExpense(int payerId, int groupId, string description, decimal amount, IEnumerable<int> consumerIds)
+        {
+            if (amount == 0)
             {
                 throw new ArgumentException("The amount cannot be zero");
             }
-            if(consumers.Count == 0)
+            if (consumerIds.Count() == 0)
             {
                 throw new ArgumentException("The list for whom the expense is paid cannot be empty");
             }
+            
 
             using var db = await Task.Run(() => new DataContext());
-            
-            var trackedPayer =  await db.Users.FindAsync(payer.Id);
-            var trackedGroup = await db.Groups.FindAsync(group.Id);
-            var trackedConsumers =  await Task.Run(()=>
-                consumers.Select(c => db.Users.Find(c.Id))
-                            .ToList());
 
-            Expense expense = new Expense(trackedPayer, description, trackedGroup, amount,
+            var trackedPayer = await db.Users.FindAsync(payerId);
+            var trackedGroup = await db.Groups.FindAsync(groupId);
+            var trackedConsumers = await Task.Run(() =>
+               consumerIds.Select(c => db.Users.Find(c))
+                           .ToList());
+
+            CheckUsersMembership(trackedGroup, trackedPayer, trackedConsumers);
+
+            Expense expense = new(trackedPayer, description, trackedGroup, amount,
                                           trackedConsumers);
 
             db.Add(expense);
             await db.SaveChangesAsync();
+        }
+
+        private void CheckUsersMembership(Group group, User payer, IEnumerable<User> consumers)
+        {
+            if (!group.Members.Contains(payer))
+            {
+                throw new ArgumentException("Given payer is not part of the group");
+            }
+
+            if (!ConsumersAreMembers(group, consumers))
+            {
+                throw new ArgumentException("List of consumers contains users which are not part of the group");
+            }
+        }
+        private bool ConsumersAreMembers(Group group, IEnumerable<User> consumerIds)
+        {
+            return consumerIds.All(c => group.Members.Contains(c));
+        }
+
+        public async Task ImportExpenses(string srcPath, Group group)
+        {
+            CsvReaderWriter csv = new();
+
+            var expensesData = await csv.ReadAsync(srcPath);
+
+           
+
+            if(!expensesData.TrueForAll(e=>e.Count == 4))
+            {
+                throw new InvalidDataException("The number of columns is not right");
+
+            }
+
+            // payer, description, amount, consumers
+
+            foreach (var expenseData in expensesData)
+            {
+                string payer, description, amount;
+                payer = expenseData[0];
+                description = expenseData[1];
+                amount = expenseData[2];
+                var consumers = expenseData[3].Split(" ");
+
+                await AddExpense(payer, group, description, amount, consumers);
+            }
+
+        }
+        public async Task ExportExpenses(string outPath, Group group)
+        {
+            List<List<string>> expensesData = new();
+
+            foreach(var expense in group.Expenses)
+            {
+                expensesData.Add(GetExpenseData(expense));
+            }
+
+            var writer = new CsvReaderWriter();
+            await writer.WriteAsync(outPath, expensesData);
+        }
+        private List<string> GetExpenseData(Expense expense)
+        {
+            List<string> result = new();
+            result.Add(expense.Payer.Username);
+            result.Add(expense.Description);
+            result.Add(expense.Amount.ToString());
+            result.Add(string.Join(' ', expense.Consumers.Select(c=>c.Username)));
+
+            return result;
         }
     }
 }

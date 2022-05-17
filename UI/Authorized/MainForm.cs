@@ -14,6 +14,7 @@ namespace Project.UI.Authorized
         public MainForm(User user)
         {
             InitializeComponent();
+
             
             User = user;
             LogedUserLbl.Text = User.Username;
@@ -83,6 +84,51 @@ namespace Project.UI.Authorized
 
             await RefreshGroupAsync();
         }
+        private async void ImportExpensesBtn_Click(object sender, EventArgs e)
+        {
+
+            InitializeOpenFile();
+            if (importExpensesOpenFileDialog.ShowDialog() != DialogResult.OK)
+            {
+                return;
+            }
+
+            //Get the path of specified file
+            var filePath = importExpensesOpenFileDialog.FileName;
+
+            ExpenseManager expenseManager = new();
+            await ShowErrorOnFail(expenseManager.ImportExpenses(filePath, selectedGroup));
+            await RefreshGroupAsync();
+        }
+
+        private async Task ShowErrorOnFail(Task task)
+        {
+            try
+            {
+                await task;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Something went wrong", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private async void ExportExpensesBtn_Click(object sender, EventArgs e)
+        {
+            InitializeSaveFile();
+
+            if (exportExpensesSaveFileDialog.ShowDialog() != DialogResult.OK)
+            {
+                return;
+            }
+
+            //Get the path of specified file
+            var filePath = exportExpensesSaveFileDialog.FileName;
+
+            ExpenseManager expenseManager = new();
+            await ShowErrorOnFail(expenseManager.ExportExpenses(filePath, selectedGroup));
+            
+        }
         private void ExportDebtsBtn_Click(object sender, EventArgs e)
         {
 
@@ -116,8 +162,19 @@ namespace Project.UI.Authorized
 
             await RefreshGroupAsync();
         }
+
+
         #endregion
-
-
+        private void InitializeOpenFile() {
+            this.importExpensesOpenFileDialog.FileName = "";
+            this.importExpensesOpenFileDialog.Filter = "csv files (*.csv)|*.csv|All files (*.*)|*.*";
+            this.importExpensesOpenFileDialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+        }
+        private void InitializeSaveFile() {
+            exportExpensesSaveFileDialog.FileName = $"Expenses-{selectedGroup}.csv";
+            exportExpensesSaveFileDialog.Filter = "csv files (*.csv)|*.csv|All files (*.*)|*.*";
+            exportExpensesSaveFileDialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+        }
+        
     }
 }
