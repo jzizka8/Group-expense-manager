@@ -19,6 +19,7 @@ namespace Project.UI.Authorized
             User = user;
             LogedUserLbl.Text = User.Username;
 
+            AddMemberBtn.Enabled = selectedGroup != null;
             _ = RefreshGroupListAsync();
         }
 
@@ -39,7 +40,7 @@ namespace Project.UI.Authorized
         private void AssignGroupControlsValues()
         {
             MembersListBox.DataSource = selectedGroup.Members.ToList();
-            ExpensesListBox.DataSource = selectedGroup.Expenses.ToList();
+            ExpensesListBox.DataSource = selectedGroup.Expenses.Reverse().ToList();
 
             AddMemberBtn.Enabled = selectedGroup.IsManagedBy(User);
         }
@@ -61,6 +62,8 @@ namespace Project.UI.Authorized
         #region Event Handlers
         private async void GroupSelectComb_SelectedIndexChanged(object sender, EventArgs e)
         {
+            AddExpenseBtn.Enabled = true;
+            
             await RefreshGroupAsync();
         }
         private async void CreateGroupBtn_Click(object sender, EventArgs e)
@@ -96,8 +99,8 @@ namespace Project.UI.Authorized
             //Get the path of specified file
             var filePath = importExpensesOpenFileDialog.FileName;
 
-            ExpenseManager expenseManager = new();
-            await ShowErrorOnFail(expenseManager.ImportExpenses(filePath, selectedGroup));
+            IOManager iOManager = new(selectedGroup);
+            await ShowErrorOnFail(iOManager.ImportExpenses(filePath));
             await RefreshGroupAsync();
         }
 
@@ -125,8 +128,8 @@ namespace Project.UI.Authorized
             //Get the path of specified file
             var filePath = exportExpensesSaveFileDialog.FileName;
 
-            ExpenseManager expenseManager = new();
-            await ShowErrorOnFail(expenseManager.ExportExpenses(filePath, selectedGroup));
+            IOManager  iOManager = new(selectedGroup);
+            await ShowErrorOnFail(iOManager.ExportExpenses(filePath));
             
         }
         private void ExportDebtsBtn_Click(object sender, EventArgs e)
@@ -148,6 +151,10 @@ namespace Project.UI.Authorized
 
         private void DebtsListBox_MouseUp(object sender, MouseEventArgs e)
         {
+            if (e.Button != MouseButtons.Right)
+            {
+                return;
+            }
             ListBox senderCasted = (ListBox)sender;
 
             // context menu for listbox won't show if nothing is selected
@@ -165,10 +172,11 @@ namespace Project.UI.Authorized
 
 
         #endregion
+        // these need to be here as they are assigned dynamicaly 
         private void InitializeOpenFile() {
-            this.importExpensesOpenFileDialog.FileName = "";
-            this.importExpensesOpenFileDialog.Filter = "csv files (*.csv)|*.csv|All files (*.*)|*.*";
-            this.importExpensesOpenFileDialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+            importExpensesOpenFileDialog.FileName = "";
+            importExpensesOpenFileDialog.Filter = "csv files (*.csv)|*.csv|All files (*.*)|*.*";
+            importExpensesOpenFileDialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
         }
         private void InitializeSaveFile() {
             exportExpensesSaveFileDialog.FileName = $"Expenses-{selectedGroup}.csv";

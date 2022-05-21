@@ -17,6 +17,7 @@ namespace Project.BusinessLayer
             User payer = await userManager.GetUserAsync(payerStr);
             decimal amount = decimal.Parse(amountStr);
             List<User> consumers = new();
+            // async linq was causing deadlocks
             foreach (var item in consumersStr)
             {
                 consumers.Add(await userManager.GetUserAsync(item));
@@ -76,55 +77,6 @@ namespace Project.BusinessLayer
             return consumerIds.All(c => group.Members.Contains(c));
         }
 
-        public async Task ImportExpenses(string srcPath, Group group)
-        {
-            CsvReaderWriter csv = new();
-
-            var expensesData = await csv.ReadAsync(srcPath);
-
-           
-
-            if(!expensesData.TrueForAll(e=>e.Count == 4))
-            {
-                throw new InvalidDataException("The number of columns is not right");
-
-            }
-
-            // payer, description, amount, consumers
-
-            foreach (var expenseData in expensesData)
-            {
-                string payer, description, amount;
-                payer = expenseData[0];
-                description = expenseData[1];
-                amount = expenseData[2];
-                var consumers = expenseData[3].Split(" ");
-
-                await AddExpense(payer, group, description, amount, consumers);
-            }
-
-        }
-        public async Task ExportExpenses(string outPath, Group group)
-        {
-            List<List<string>> expensesData = new();
-
-            foreach(var expense in group.Expenses)
-            {
-                expensesData.Add(GetExpenseData(expense));
-            }
-
-            var writer = new CsvReaderWriter();
-            await writer.WriteAsync(outPath, expensesData);
-        }
-        private List<string> GetExpenseData(Expense expense)
-        {
-            List<string> result = new();
-            result.Add(expense.Payer.Username);
-            result.Add(expense.Description);
-            result.Add(expense.Amount.ToString());
-            result.Add(string.Join(' ', expense.Consumers.Select(c=>c.Username)));
-
-            return result;
-        }
+        
     }
 }
