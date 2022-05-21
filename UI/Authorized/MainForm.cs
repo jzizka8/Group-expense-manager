@@ -19,7 +19,8 @@ namespace Project.UI.Authorized
             User = user;
             LogedUserLbl.Text = User.Username;
 
-            AddMemberBtn.Enabled = selectedGroup != null;
+            //AddMemberBtn.Enabled = selectedGroup != null;
+
             _ = RefreshGroupListAsync();
         }
 
@@ -43,12 +44,16 @@ namespace Project.UI.Authorized
             ExpensesListBox.DataSource = selectedGroup.Expenses.Reverse().ToList();
 
             AddMemberBtn.Enabled = selectedGroup.IsManagedBy(User);
+            ExportExpensesBtn.Enabled = ExpensesListBox.Items.Count > 0;
+
         }
 
         private async Task LoadDebtsListAsync()
         {
             DebtCalculator debtCalculator = new();
             DebtsListBox.DataSource = await Task.Run(() => debtCalculator.CalculateDebts(selectedGroup.Expenses));
+            ExportDebtsBtn.Enabled = DebtsListBox.Items.Count > 0;
+
         }
 
         private async Task RefreshGroupAsync()
@@ -63,7 +68,7 @@ namespace Project.UI.Authorized
         private async void GroupSelectComb_SelectedIndexChanged(object sender, EventArgs e)
         {
             AddExpenseBtn.Enabled = true;
-            
+            ImportExpensesBtn.Enabled = true;
             await RefreshGroupAsync();
         }
         private async void CreateGroupBtn_Click(object sender, EventArgs e)

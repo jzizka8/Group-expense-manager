@@ -98,6 +98,7 @@
             // AddMemberBtn
             // 
             this.AddMemberBtn.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.AddMemberBtn.Enabled = false;
             this.AddMemberBtn.Location = new System.Drawing.Point(688, 552);
             this.AddMemberBtn.Margin = new System.Windows.Forms.Padding(10, 0, 10, 10);
             this.AddMemberBtn.Name = "AddMemberBtn";
@@ -135,6 +136,7 @@
             // ExportDebtsBtn
             // 
             this.ExportDebtsBtn.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.ExportDebtsBtn.Enabled = false;
             this.ExportDebtsBtn.Location = new System.Drawing.Point(912, 552);
             this.ExportDebtsBtn.Margin = new System.Windows.Forms.Padding(10, 0, 10, 10);
             this.ExportDebtsBtn.Name = "ExportDebtsBtn";
@@ -202,6 +204,7 @@
             // ImportExpensesBtn
             // 
             this.ImportExpensesBtn.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.ImportExpensesBtn.Enabled = false;
             this.ImportExpensesBtn.Location = new System.Drawing.Point(236, 0);
             this.ImportExpensesBtn.Margin = new System.Windows.Forms.Padding(10, 0, 10, 0);
             this.ImportExpensesBtn.Name = "ImportExpensesBtn";
@@ -214,6 +217,7 @@
             // ExportExpensesBtn
             // 
             this.ExportExpensesBtn.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.ExportExpensesBtn.Enabled = false;
             this.ExportExpensesBtn.Location = new System.Drawing.Point(462, 0);
             this.ExportExpensesBtn.Margin = new System.Windows.Forms.Padding(10, 0, 10, 0);
             this.ExportExpensesBtn.Name = "ExportExpensesBtn";
