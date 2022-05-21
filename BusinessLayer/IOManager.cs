@@ -1,4 +1,5 @@
-﻿using Project.CsvReading;
+﻿using Project.BusinessLayer.DebtManaging;
+using Project.CsvReading;
 using Project.Models;
 using System;
 using System.Collections.Generic;
@@ -10,18 +11,17 @@ namespace Project.BusinessLayer
 {
     public class IOManager
     {
-        private Group group;
-
-        public IOManager(Group group)
+        private string path;
+        public IOManager(string path)
         {
-            this.group = group;
+            this.path = path;
         }
 
-        public async Task ImportExpenses(string srcPath)
+        public async Task ImportExpenses(Group group)
         {
-            CsvReader csv = new CsvReaderWriter();
+            ICsvReader csv = new CsvReaderWriter();
 
-            var expensesData = await csv.ReadAsync(srcPath);
+            var expensesData = await csv.ReadAsync(path);
 
 
 
@@ -47,12 +47,12 @@ namespace Project.BusinessLayer
             }
 
         }
-        public async Task ExportExpenses(string outPath)
+        public async Task ExportExpenses(Group group)
         {
-            List<List<string>> expensesData = group.Expenses.Select(e => GetExpenseData(e)).ToList();
+            var expensesData = group.Expenses.Select(e => GetExpenseData(e));
 
-            CsvWriter writer = new CsvReaderWriter();
-            await writer.WriteAsync(outPath, expensesData);
+            ICsvWriter writer = new CsvReaderWriter();
+            await writer.WriteAsync(path, expensesData);
         }
         private List<string> GetExpenseData(Expense expense)
         {
@@ -64,13 +64,15 @@ namespace Project.BusinessLayer
 
             return result;
         }
-        private List<string> GetDebtData(DebtManaging.IDebt debt) => 
-            new List<string>() { debt.Payee.ToString(), debt.Amount.ToString(),
+        private List<string> GetDebtData(IDebt debt) => 
+            new() { debt.Payee.ToString(), debt.Amount.ToString(),
                 debt.Debtor.ToString() };
 
-        public async Task ExportDebts(string path)
+        public async Task ExportDebts(IEnumerable<IDebt> debts)
         {
-
+            var debtsData = debts.Select(d => GetDebtData(d));
+            ICsvWriter writer = new CsvReaderWriter();
+            await writer.WriteAsync(path, debtsData);
         }
     }
 }

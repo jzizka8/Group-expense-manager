@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Project.CsvReading
 {
-    public class CsvReaderWriter : CsvReader, CsvWriter
+    public class CsvReaderWriter : ICsvReader, ICsvWriter
     {
         private static readonly string DEFAULT_DELIMITER = ",";
         public string  Delimiter { get; set; }

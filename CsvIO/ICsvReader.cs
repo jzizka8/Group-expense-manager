@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace Project.CsvReading
 {
-    public interface CsvWriter
+    public interface ICsvReader
     {
-        Task WriteAsync(string path, List<List<string>> content);
+        Task<List<List<string>>> ReadAsync(string path);
     }
 }
