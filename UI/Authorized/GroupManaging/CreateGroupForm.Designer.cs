@@ -70,7 +70,7 @@
             this.CreateBtn.UseVisualStyleBackColor = true;
             this.CreateBtn.Click += new System.EventHandler(this.CreateBtn_Click);
             // 
-            // CreateGroup
+            // CreateGroupForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -79,8 +79,8 @@
             this.Controls.Add(this.CancelBtn);
             this.Controls.Add(this.GroupNameTxt);
             this.Controls.Add(this.GroupNameLbl);
-            this.Name = "CreateGroup";
-            this.Text = "CreateGroup";
+            this.Name = "CreateGroupForm";
+            this.Text = "Create new group";
             this.ResumeLayout(false);
             this.PerformLayout();
 

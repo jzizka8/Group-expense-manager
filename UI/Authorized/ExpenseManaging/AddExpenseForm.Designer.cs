@@ -42,7 +42,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.AmountNum)).BeginInit();
             this.SuspendLayout();
             // 
-            // Layout
+            // FormLayout
             // 
             this.FormLayout.ColumnCount = 2;
             this.FormLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 40F));
@@ -57,7 +57,7 @@
             this.FormLayout.Controls.Add(this.SubmitBtn, 1, 4);
             this.FormLayout.Controls.Add(this.AmountNum, 1, 2);
             this.FormLayout.Location = new System.Drawing.Point(40, 37);
-            this.FormLayout.Name = "Layout";
+            this.FormLayout.Name = "FormLayout";
             this.FormLayout.RowCount = 5;
             this.FormLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 50F));
             this.FormLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 50F));
@@ -166,7 +166,7 @@
             this.ClientSize = new System.Drawing.Size(670, 582);
             this.Controls.Add(this.FormLayout);
             this.Name = "AddExpenseForm";
-            this.Text = "AddExpenseForm";
+            this.Text = "Add new expense";
             this.FormLayout.ResumeLayout(false);
             this.FormLayout.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.AmountNum)).EndInit();

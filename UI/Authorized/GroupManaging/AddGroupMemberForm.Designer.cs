@@ -80,7 +80,7 @@
             this.Controls.Add(this.UsernamesTxt);
             this.Controls.Add(this.UsernamesLbl);
             this.Name = "AddGroupMemberForm";
-            this.Text = "CreateGroup";
+            this.Text = "Add members";
             this.ResumeLayout(false);
             this.PerformLayout();
 
