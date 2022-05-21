@@ -37,7 +37,7 @@ namespace Project.CsvReading
             return result;
         }
 
-        public async Task WriteAsync(string path, List<List<string>> content)
+        public async Task WriteAsync(string path, IEnumerable<IEnumerable<string>> content)
         {
             using StreamWriter writer = new(path);
 
