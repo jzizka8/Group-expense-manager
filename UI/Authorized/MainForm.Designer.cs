@@ -50,6 +50,7 @@
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
             this.importExpensesOpenFileDialog = new System.Windows.Forms.OpenFileDialog();
             this.exportExpensesSaveFileDialog = new System.Windows.Forms.SaveFileDialog();
+            this.exportDebtsSaveFileDialog = new System.Windows.Forms.SaveFileDialog();
             DebtListBoxContextMS = new System.Windows.Forms.ContextMenuStrip(this.components);
             DebtListBoxContextMS.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
@@ -188,6 +189,7 @@
             // AddExpenseBtn
             // 
             this.AddExpenseBtn.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.AddExpenseBtn.Enabled = false;
             this.AddExpenseBtn.Location = new System.Drawing.Point(10, 0);
             this.AddExpenseBtn.Margin = new System.Windows.Forms.Padding(10, 0, 10, 0);
             this.AddExpenseBtn.Name = "AddExpenseBtn";
@@ -291,8 +293,6 @@
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tableLayoutPanel2.Size = new System.Drawing.Size(678, 48);
             this.tableLayoutPanel2.TabIndex = 15;
-
-            
             // 
             // MainForm
             // 
@@ -334,5 +334,6 @@
         private OpenFileDialog importExpensesOpenFileDialog;
         private Button ExportExpensesBtn;
         private SaveFileDialog exportExpensesSaveFileDialog;
+        private SaveFileDialog exportDebtsSaveFileDialog;
     }
 }

@@ -141,9 +141,11 @@ namespace Project.UI.Authorized
                 return;
             }
             var filePath = exportDebtsSaveFileDialog.FileName;
+            var debts = DebtsListBox.Items.OfType<IDebt>();
 
             IOManager iOManager = new(filePath);
-            //await ShowErrorOnFail(iOManager.ExportDebts(DebtsListBox.Select(o=> (IDebt) o))
+
+            await ShowErrorOnFail(iOManager.ExportDebts(debts));
         }
         private void DebtsListBox_MouseDown(object sender, MouseEventArgs e)
         {
