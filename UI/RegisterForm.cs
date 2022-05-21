@@ -21,7 +21,7 @@ namespace Project
             {
                 await userManager.RegisterUserAsync(UserNameTxt.Text, PasswordTxt.Text);
                 MessageBox.Show("You may proceed to log in", "Registration succesful", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                Dispose();
+                Close();
             }
             catch (ArgumentException ex)
             {
