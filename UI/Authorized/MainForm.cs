@@ -90,7 +90,7 @@ namespace Project.UI.Authorized
         private async void ImportExpensesBtn_Click(object sender, EventArgs e)
         {
 
-            InitializeOpenFile();
+            InitializeImportExpensesOpenFile();
             if (importExpensesOpenFileDialog.ShowDialog() != DialogResult.OK)
             {
                 return;
@@ -99,8 +99,8 @@ namespace Project.UI.Authorized
             //Get the path of specified file
             var filePath = importExpensesOpenFileDialog.FileName;
 
-            IOManager iOManager = new(selectedGroup);
-            await ShowErrorOnFail(iOManager.ImportExpenses(filePath));
+            IOManager iOManager = new(filePath);
+            await ShowErrorOnFail(iOManager.ImportExpenses(selectedGroup));
             await RefreshGroupAsync();
         }
 
@@ -118,7 +118,7 @@ namespace Project.UI.Authorized
 
         private async void ExportExpensesBtn_Click(object sender, EventArgs e)
         {
-            InitializeSaveFile();
+            InitializeExportExpenseSaveFile();
 
             if (exportExpensesSaveFileDialog.ShowDialog() != DialogResult.OK)
             {
@@ -128,13 +128,22 @@ namespace Project.UI.Authorized
             //Get the path of specified file
             var filePath = exportExpensesSaveFileDialog.FileName;
 
-            IOManager  iOManager = new(selectedGroup);
-            await ShowErrorOnFail(iOManager.ExportExpenses(filePath));
+            IOManager  iOManager = new(filePath);
+            await ShowErrorOnFail(iOManager.ExportExpenses(selectedGroup));
             
         }
-        private void ExportDebtsBtn_Click(object sender, EventArgs e)
+        private async void ExportDebtsBtn_Click(object sender, EventArgs e)
         {
+            InitializeExportDebtsSaveFile();
 
+            if(exportDebtsSaveFileDialog.ShowDialog()!= DialogResult.OK)
+            {
+                return;
+            }
+            var filePath = exportDebtsSaveFileDialog.FileName;
+
+            IOManager iOManager = new(filePath);
+            //await ShowErrorOnFail(iOManager.ExportDebts(DebtsListBox.Select(o=> (IDebt) o))
         }
         private void DebtsListBox_MouseDown(object sender, MouseEventArgs e)
         {
@@ -172,16 +181,25 @@ namespace Project.UI.Authorized
 
 
         #endregion
+
+
+        private readonly string csvFilter = "csv files (*.csv)|*.csv|All files (*.*)|*.*";
         // these need to be here as they are assigned dynamicaly 
-        private void InitializeOpenFile() {
+        private void InitializeImportExpensesOpenFile() {
             importExpensesOpenFileDialog.FileName = "";
-            importExpensesOpenFileDialog.Filter = "csv files (*.csv)|*.csv|All files (*.*)|*.*";
+            importExpensesOpenFileDialog.Filter = csvFilter;
             importExpensesOpenFileDialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
         }
-        private void InitializeSaveFile() {
+        private void InitializeExportExpenseSaveFile() {
             exportExpensesSaveFileDialog.FileName = $"Expenses-{selectedGroup}.csv";
-            exportExpensesSaveFileDialog.Filter = "csv files (*.csv)|*.csv|All files (*.*)|*.*";
+            exportExpensesSaveFileDialog.Filter = csvFilter;
             exportExpensesSaveFileDialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+        }
+        private void InitializeExportDebtsSaveFile()
+        {
+            exportDebtsSaveFileDialog.FileName = $"Debts-{selectedGroup}.csv";
+            exportDebtsSaveFileDialog.Filter = csvFilter;
+            exportDebtsSaveFileDialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
         }
         
     }
