@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Project.CsvReading
 {
-    public class CsvReaderWriter
+    public class CsvReaderWriter : CsvReader, CsvWriter
     {
         private static readonly string DEFAULT_DELIMITER = ",";
         public string  Delimiter { get; set; }
@@ -21,7 +21,7 @@ namespace Project.CsvReading
         public async Task<List<List<string>>> ReadAsync(string path)
         {
             List<List<string>> result = new();
-            List<string> line = new();
+            List<string> line;
             
             using StreamReader reader = new(path);
             
