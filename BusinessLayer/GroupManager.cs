@@ -60,7 +60,7 @@ namespace Project.BusinessLayer
 
             if(users.Count != usernamesSplit.Length)
             {
-                throw new ArgumentException("Some users that were attempted to be added don't exist");
+                throw new ArgumentException("Some of the entered username don't exist");
             }
         }
 
