@@ -1,5 +1,5 @@
 ﻿using Project.BusinessLayer.DebtManaging;
-using Project.CsvReading;
+using Project.CsvIO;
 using Project.Models;
 using System;
 using System.Collections.Generic;
@@ -19,7 +19,7 @@ namespace Project.BusinessLayer
 
         public async Task ImportExpenses(Group group)
         {
-            ICsvReader csv = new CsvReaderWriter();
+            ICsvReader csv = new CsvReader();
 
             var expensesData = await csv.ReadAsync(path);
 
@@ -51,7 +51,7 @@ namespace Project.BusinessLayer
         {
             var expensesData = group.Expenses.Select(e => GetExpenseData(e));
 
-            ICsvWriter writer = new CsvReaderWriter();
+            ICsvWriter writer = new CsvWriter();
             await writer.WriteAsync(path, expensesData);
         }
         private List<string> GetExpenseData(Expense expense)
@@ -71,7 +71,7 @@ namespace Project.BusinessLayer
         public async Task ExportDebts(IEnumerable<IDebt> debts)
         {
             var debtsData = debts.Select(d => GetDebtData(d));
-            ICsvWriter writer = new CsvReaderWriter();
+            ICsvWriter writer = new CsvWriter();
             await writer.WriteAsync(path, debtsData);
         }
     }

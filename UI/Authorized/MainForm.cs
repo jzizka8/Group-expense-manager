@@ -21,7 +21,7 @@ namespace Project.UI.Authorized
 
             //AddMemberBtn.Enabled = selectedGroup != null;
 
-            _ = RefreshGroupListAsync();
+            RefreshGroupListAsync();
         }
 
         private async Task RefreshGroupListAsync()
@@ -208,6 +208,5 @@ namespace Project.UI.Authorized
             exportDebtsSaveFileDialog.Filter = csvFilter;
             exportDebtsSaveFileDialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
         }
-        
     }
 }

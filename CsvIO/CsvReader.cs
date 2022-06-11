@@ -4,17 +4,16 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Project.CsvReading
+namespace Project.CsvIO
 {
-    public class CsvReaderWriter : ICsvReader, ICsvWriter
+    public class CsvReader : ICsvReader
     {
-        private static readonly string DEFAULT_DELIMITER = ",";
         public string  Delimiter { get; set; }
-        public CsvReaderWriter() :this(DEFAULT_DELIMITER)
+        public CsvReader() :this(ICsvReader.DEFAULT_DELIMITER)
         {
         }
 
-        public CsvReaderWriter(string delimiter)
+        public CsvReader(string delimiter)
         {
             Delimiter = delimiter;
         }
@@ -35,16 +34,6 @@ namespace Project.CsvReading
             }
 
             return result;
-        }
-
-        public async Task WriteAsync(string path, IEnumerable<IEnumerable<string>> content)
-        {
-            using StreamWriter writer = new(path);
-
-            foreach (var line in content)
-            {
-                await writer.WriteLineAsync(string.Join(Delimiter, line));
-            }
         }
     }
 }
