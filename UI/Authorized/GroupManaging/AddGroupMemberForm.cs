@@ -24,8 +24,18 @@ namespace Project.UI.Authorized.GroupManaging
         private async void CreateBtn_Click(object sender, EventArgs e)
         {
             GroupManager groupManager = new();
-            await groupManager.AddGroupMembers(Group, UsernamesTxt.Text);
-            MessageBox.Show("Adding comlete", "Finished", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            try
+            {
+
+                await groupManager.AddGroupMembers(Group, UsernamesTxt.Text);
+                MessageBox.Show("Adding comlete", "Finished", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+            }
+            catch (ArgumentException ex)
+            {
+                MessageBox.Show(ex.Message, "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+
             Close();
         }
 

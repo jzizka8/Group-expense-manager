@@ -57,6 +57,11 @@ namespace Project.BusinessLayer
             db.Update(trackedGroup);
             
             await db.SaveChangesAsync();
+
+            if(users.Count != usernamesSplit.Length)
+            {
+                throw new ArgumentException("Some users that were attempted to be added don't exist");
+            }
         }
 
         public async Task<List<Group>> GetGroupsAsync(User member)
