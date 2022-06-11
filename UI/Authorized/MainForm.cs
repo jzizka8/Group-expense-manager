@@ -19,9 +19,6 @@ namespace Project.UI.Authorized
             User = user;
             LogedUserLbl.Text = User.Username;
 
-            //AddMemberBtn.Enabled = selectedGroup != null;
-
-            RefreshGroupListAsync();
         }
 
         private async Task RefreshGroupListAsync()
@@ -207,6 +204,11 @@ namespace Project.UI.Authorized
             exportDebtsSaveFileDialog.FileName = $"Debts-{selectedGroup}.csv";
             exportDebtsSaveFileDialog.Filter = csvFilter;
             exportDebtsSaveFileDialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+        }
+
+        private async void MainForm_Load(object sender, EventArgs e)
+        {
+            await RefreshGroupListAsync();
         }
     }
 }

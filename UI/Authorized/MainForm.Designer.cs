@@ -309,6 +309,7 @@
             this.MinimumSize = new System.Drawing.Size(1333, 770);
             this.Name = "MainForm";
             this.Text = "GEM - Group Expense Manager";
+            this.Load += new System.EventHandler(this.MainForm_Load);
             DebtListBoxContextMS.ResumeLayout(false);
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel1.PerformLayout();
