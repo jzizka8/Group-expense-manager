@@ -236,6 +236,7 @@
             this.MembersListBox.Location = new System.Drawing.Point(688, 42);
             this.MembersListBox.Margin = new System.Windows.Forms.Padding(10, 10, 10, 0);
             this.MembersListBox.Name = "MembersListBox";
+            this.MembersListBox.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
             this.MembersListBox.Size = new System.Drawing.Size(204, 510);
             this.MembersListBox.TabIndex = 14;
             // 
@@ -305,6 +306,7 @@
             this.ClientSize = new System.Drawing.Size(1311, 714);
             this.Controls.Add(this.tableLayoutPanel2);
             this.Controls.Add(this.tableLayoutPanel1);
+            this.MinimumSize = new System.Drawing.Size(1333, 770);
             this.Name = "MainForm";
             this.Text = "GEM - Group Expense Manager";
             DebtListBoxContextMS.ResumeLayout(false);
