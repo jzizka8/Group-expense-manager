@@ -43,7 +43,7 @@ namespace Project.BusinessLayer
             {
                 throw new ArgumentException("The amount cannot be zero");
             }
-            if (consumerIds.Count() == 0)
+            if (!consumerIds.Any())
             {
                 throw new ArgumentException("The list for whom the expense is paid cannot be empty");
             }
