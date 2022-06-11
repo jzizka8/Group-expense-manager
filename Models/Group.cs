@@ -22,19 +22,6 @@ namespace Project.Models
             Members = new HashSet<User>() { admin };
             Expenses = new HashSet<Expense>();
         }
-
-        public override bool Equals(object? obj)
-        {
-            if (ReferenceEquals(null, obj))
-            {
-                return false;
-            }
-            if (ReferenceEquals(this, obj))
-            {
-                return true;
-            }
-            return obj.GetType() == this.GetType() && Equals((Group)obj);
-        }
         public bool Equals(Group other)
         {
             return Id == other.Id;
