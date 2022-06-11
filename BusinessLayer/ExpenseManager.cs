@@ -12,11 +12,17 @@ namespace Project.BusinessLayer
     {
         public async Task AddExpense(string payerStr, Group group, string description, string amountStr, IEnumerable<string> consumersStr)
         {
-            UserManager userManager = new();
+            decimal amount;
+            if (decimal.TryParse(amountStr, out amount))
+            {
+                throw new ArgumentException("The amount is not of decimal type");
+            }
 
+            UserManager userManager = new();
             User payer = await userManager.GetUserAsync(payerStr);
-            decimal amount = decimal.Parse(amountStr);
+            
             List<User> consumers = new();
+
             // async linq was causing deadlocks
             foreach (var item in consumersStr)
             {
