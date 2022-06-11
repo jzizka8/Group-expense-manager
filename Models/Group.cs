@@ -2,7 +2,7 @@
 
 namespace Project.Models
 {
-    public class Group
+    public class Group:IEquatable<Group>
     {
 
         public int Id { get; set; }

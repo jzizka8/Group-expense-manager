@@ -39,15 +39,6 @@ namespace Project.Models
             }
             return obj.GetType() == this.GetType() && Equals((Expense)obj);
         }
-        public bool Equals(User other)
-        {
-            return Id == other.Id;
-        }
-
-        public override int GetHashCode()
-        {
-            return Id;
-        }
 
         public override string ToString()
         {
