@@ -1,9 +1,8 @@
-﻿using System;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace Project.Models
 {
-    public class User:IEquatable<User>
+    public class User : IEquatable<User>
     {
         public int Id { get; set; }
         [Required]

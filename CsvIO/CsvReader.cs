@@ -1,15 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Project.CsvIO
+﻿namespace Project.CsvIO
 {
     public class CsvReader : ICsvReader
     {
-        public string  Delimiter { get; set; }
-        public CsvReader() :this(ICsvReader.DEFAULT_DELIMITER)
+        public string Delimiter { get; set; }
+        public CsvReader() : this(ICsvReader.DEFAULT_DELIMITER)
         {
         }
 
@@ -21,12 +15,12 @@ namespace Project.CsvIO
         {
             List<List<string>> result = new();
             List<string> line;
-            
+
             using StreamReader reader = new(path);
-            
+
             while (!reader.EndOfStream)
             {
-                
+
                 line = new();
                 string rawLine = await reader.ReadLineAsync();
                 line.AddRange(rawLine.Split(Delimiter));

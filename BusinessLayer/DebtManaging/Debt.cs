@@ -1,15 +1,10 @@
 ﻿using Project.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Project.BusinessLayer.DebtManaging
 {
-    public class Debt :IDebt
+    public class Debt : IDebt
     {
-        public User Debtor{ get; private set; }
+        public User Debtor { get; private set; }
         public User Payee { get; private set; }
         public decimal Amount { get; private set; }
 

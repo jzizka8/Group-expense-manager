@@ -59,6 +59,6 @@ namespace Project.UI
             this.ReplaceCurrentWith(register);
         }
 
-        
+
     }
 }

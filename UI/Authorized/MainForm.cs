@@ -1,5 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Project.BusinessLayer;
+﻿using Project.BusinessLayer;
 using Project.BusinessLayer.DebtManaging;
 using Project.Models;
 using Project.UI.Authorized.ExpenseManaging;
@@ -15,7 +14,7 @@ namespace Project.UI.Authorized
         {
             InitializeComponent();
 
-            
+
             User = user;
             LogedUserLbl.Text = User.Username;
 
@@ -59,7 +58,7 @@ namespace Project.UI.Authorized
             AssignGroupControlsValues();
             await LoadDebtsListAsync();
         }
-        
+
 
         #region Event Handlers
         private async void GroupSelectComb_SelectedIndexChanged(object sender, EventArgs e)
@@ -74,7 +73,7 @@ namespace Project.UI.Authorized
             createGroup.ShowDialogAlignedWith(this);
             await RefreshGroupListAsync();
         }
-        private async void AddMemberBtn_Click(object sender, EventArgs e )
+        private async void AddMemberBtn_Click(object sender, EventArgs e)
         {
             Form addMember = new AddGroupMemberForm(selectedGroup);
             addMember.ShowDialogAlignedWith(this);
@@ -130,15 +129,15 @@ namespace Project.UI.Authorized
             //Get the path of specified file
             var filePath = exportExpensesSaveFileDialog.FileName;
 
-            IOManager  iOManager = new(filePath);
+            IOManager iOManager = new(filePath);
             await ShowErrorOnFail(iOManager.ExportExpenses(selectedGroup));
-            
+
         }
         private async void ExportDebtsBtn_Click(object sender, EventArgs e)
         {
             InitializeExportDebtsSaveFile();
 
-            if(exportDebtsSaveFileDialog.ShowDialog()!= DialogResult.OK)
+            if (exportDebtsSaveFileDialog.ShowDialog() != DialogResult.OK)
             {
                 return;
             }
@@ -189,12 +188,14 @@ namespace Project.UI.Authorized
 
         private readonly string csvFilter = "csv files (*.csv)|*.csv|All files (*.*)|*.*";
         // these need to be here as they are assigned dynamicaly 
-        private void InitializeImportExpensesOpenFile() {
+        private void InitializeImportExpensesOpenFile()
+        {
             importExpensesOpenFileDialog.FileName = "";
             importExpensesOpenFileDialog.Filter = csvFilter;
             importExpensesOpenFileDialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
         }
-        private void InitializeExportExpenseSaveFile() {
+        private void InitializeExportExpenseSaveFile()
+        {
             exportExpensesSaveFileDialog.FileName = $"Expenses-{selectedGroup}.csv";
             exportExpensesSaveFileDialog.Filter = csvFilter;
             exportExpensesSaveFileDialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);

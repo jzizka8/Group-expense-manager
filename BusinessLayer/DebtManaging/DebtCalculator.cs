@@ -1,9 +1,4 @@
 ﻿using Project.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Project.BusinessLayer.DebtManaging
 {
@@ -13,7 +8,7 @@ namespace Project.BusinessLayer.DebtManaging
         public List<Debt> CalculateDebts(IEnumerable<Expense> expenses)
         {
             List<Debt> result = new();
-            if(expenses.Count() == 0)
+            if (expenses.Count() == 0)
             {
                 return result;
             }
@@ -21,7 +16,7 @@ namespace Project.BusinessLayer.DebtManaging
 
             User middleMan = GetMaxValueKey(userAmount);
 
-            foreach((var user, var balance) in userAmount)
+            foreach ((var user, var balance) in userAmount)
             {
                 if (user.Equals(middleMan) || balance == 0)
                 {
@@ -32,7 +27,7 @@ namespace Project.BusinessLayer.DebtManaging
                 User debtor = balance > 0 ? middleMan : user;
                 User payee = balance > 0 ? user : middleMan;
 
-                
+
                 result.Add(new Debt(debtor, payee, Math.Abs(balance)));
             }
 
@@ -44,7 +39,7 @@ namespace Project.BusinessLayer.DebtManaging
             userAmount[key] = userAmount.GetValueOrDefault(key, 0) + amount;
         }
 
-        private Dictionary<User, decimal>  CollectBalances(IEnumerable<Expense> expenses)
+        private Dictionary<User, decimal> CollectBalances(IEnumerable<Expense> expenses)
         {
             Dictionary<User, decimal> userAmount = new();
             foreach (var expense in expenses)
@@ -62,7 +57,7 @@ namespace Project.BusinessLayer.DebtManaging
             return userAmount;
         }
 
-        private User GetMaxValueKey(Dictionary<User,decimal> valuePairs)
+        private User GetMaxValueKey(Dictionary<User, decimal> valuePairs)
         {
             return valuePairs.Aggregate((x, y) => x.Value > y.Value ? x : y).Key;
         }

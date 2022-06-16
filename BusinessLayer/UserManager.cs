@@ -14,7 +14,7 @@ namespace Project.BusinessLayer
             {
                 throw new ArgumentException("Username is either too short or contains illegal characters");
             }
-            if (password.Length<3)
+            if (password.Length < 3)
             {
                 throw new ArgumentException("Password is too short");
             }

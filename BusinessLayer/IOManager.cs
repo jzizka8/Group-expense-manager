@@ -1,11 +1,6 @@
 ﻿using Project.BusinessLayer.DebtManaging;
 using Project.CsvIO;
 using Project.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Project.BusinessLayer
 {
@@ -64,9 +59,13 @@ namespace Project.BusinessLayer
 
             return result;
         }
-        private List<string> GetDebtData(IDebt debt) => 
-            new() { debt.Payee.ToString(), debt.Amount.ToString(),
-                debt.Debtor.ToString() };
+        private List<string> GetDebtData(IDebt debt) =>
+            new()
+            {
+                debt.Payee.ToString(),
+                debt.Amount.ToString(),
+                debt.Debtor.ToString()
+            };
 
         public async Task ExportDebts(IEnumerable<IDebt> debts)
         {

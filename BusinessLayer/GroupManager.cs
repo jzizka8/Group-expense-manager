@@ -1,10 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Project.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Regex = System.Text.RegularExpressions;
 
 namespace Project.BusinessLayer
@@ -48,17 +43,17 @@ namespace Project.BusinessLayer
             var trackedGroup = await db.Groups.FindAsync(group.Id);
 
             var users = db.Users.Where(u => usernamesSplit.Contains(u.Username)).ToList();
-            
-            foreach(var user in users)
+
+            foreach (var user in users)
             {
                 trackedGroup.Members.Add(user);
             }
 
             db.Update(trackedGroup);
-            
+
             await db.SaveChangesAsync();
 
-            if(users.Count != usernamesSplit.Length)
+            if (users.Count != usernamesSplit.Length)
             {
                 throw new ArgumentException("Some of the entered username don't exist");
             }
@@ -77,10 +72,10 @@ namespace Project.BusinessLayer
             return await db.Groups
                 .Include(g => g.Admin)
                 .Include(g => g.Members)
-                .Include(g=>g.Expenses)
-                    .ThenInclude(e=> e.Payer)
-                .Include(g=> g.Expenses)
-                    .ThenInclude(e=> e.Consumers)
+                .Include(g => g.Expenses)
+                    .ThenInclude(e => e.Payer)
+                .Include(g => g.Expenses)
+                    .ThenInclude(e => e.Consumers)
                 .FirstOrDefaultAsync(g => g.Equals(group));
         }
     }

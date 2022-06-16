@@ -1,15 +1,6 @@
 ﻿using Project.BusinessLayer;
 using Project.BusinessLayer.DebtManaging;
 using Project.Models;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 
 namespace Project.UI.Authorized.ExpenseManaging
 {
@@ -64,7 +55,7 @@ namespace Project.UI.Authorized.ExpenseManaging
                     AmountNum.Value,
                     ConsumersChListBox.CheckedItems.OfType<User>().ToList());
             }
-            catch(ArgumentException ex)
+            catch (ArgumentException ex)
             {
                 MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;

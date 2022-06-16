@@ -1,10 +1,4 @@
-﻿using Project.CsvIO;
-using Project.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Project.Models;
 
 namespace Project.BusinessLayer
 {
@@ -20,7 +14,7 @@ namespace Project.BusinessLayer
 
             UserManager userManager = new();
             User payer = await userManager.GetUserAsync(payerStr);
-            
+
             List<User> consumers = new();
 
             // async linq was causing deadlocks
@@ -28,11 +22,11 @@ namespace Project.BusinessLayer
             {
                 consumers.Add(await userManager.GetUserAsync(item));
             }
-            
+
 
             await AddExpense(payer, group, description, amount, consumers);
         }
-        public async Task AddExpense(User payer,Group group, string description, decimal amount, IEnumerable<User> consumers)
+        public async Task AddExpense(User payer, Group group, string description, decimal amount, IEnumerable<User> consumers)
         {
             await AddExpense(payer.Id, group.Id, description, amount, consumers.Select(c => c.Id).ToList());
         }
@@ -47,7 +41,7 @@ namespace Project.BusinessLayer
             {
                 throw new ArgumentException("The list for whom the expense is paid cannot be empty");
             }
-            
+
 
             using var db = await Task.Run(() => new DataContext());
 
@@ -83,6 +77,6 @@ namespace Project.BusinessLayer
             return consumerIds.All(c => group.Members.Contains(c));
         }
 
-        
+
     }
 }
