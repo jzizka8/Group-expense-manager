@@ -43,6 +43,8 @@
             this.ImportExpensesBtn = new System.Windows.Forms.Button();
             this.ExportExpensesBtn = new System.Windows.Forms.Button();
             this.MembersListBox = new System.Windows.Forms.ListBox();
+            this.MembersListBoxContextMS = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.toolStripMenuItemRemove = new System.Windows.Forms.ToolStripMenuItem();
             this.ExpensesListBox = new System.Windows.Forms.ListBox();
             this.LogedUserLbl = new System.Windows.Forms.Label();
             this.GroupSelectComb = new System.Windows.Forms.ComboBox();
@@ -55,6 +57,7 @@
             DebtListBoxContextMS.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
             this.ExpensesBtnsTLP.SuspendLayout();
+            this.MembersListBoxContextMS.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -119,8 +122,8 @@
             this.DebtsListBox.Name = "DebtsListBox";
             this.DebtsListBox.Size = new System.Drawing.Size(316, 510);
             this.DebtsListBox.TabIndex = 10;
-            this.DebtsListBox.MouseDown += new System.Windows.Forms.MouseEventHandler(this.DebtsListBox_MouseDown);
-            this.DebtsListBox.MouseUp += new System.Windows.Forms.MouseEventHandler(this.DebtsListBox_MouseUp);
+            this.DebtsListBox.MouseDown += new System.Windows.Forms.MouseEventHandler(this.SelectListBoxItemOnRightClick);
+            this.DebtsListBox.MouseUp += new System.Windows.Forms.MouseEventHandler(this.ShowContextMSOnSelectedIndex);
             // 
             // DebtsLbl
             // 
@@ -229,6 +232,7 @@
             // 
             // MembersListBox
             // 
+            this.MembersListBox.ContextMenuStrip = this.MembersListBoxContextMS;
             this.MembersListBox.Dock = System.Windows.Forms.DockStyle.Fill;
             this.MembersListBox.FormattingEnabled = true;
             this.MembersListBox.HorizontalScrollbar = true;
@@ -236,9 +240,25 @@
             this.MembersListBox.Location = new System.Drawing.Point(688, 42);
             this.MembersListBox.Margin = new System.Windows.Forms.Padding(10, 10, 10, 0);
             this.MembersListBox.Name = "MembersListBox";
-            this.MembersListBox.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
             this.MembersListBox.Size = new System.Drawing.Size(204, 510);
             this.MembersListBox.TabIndex = 14;
+            this.MembersListBox.MouseDown += new System.Windows.Forms.MouseEventHandler(this.SelectListBoxItemOnRightClick);
+            this.MembersListBox.MouseUp += new System.Windows.Forms.MouseEventHandler(this.MembersListBox_MouseUp);
+            // 
+            // MembersListBoxContextMS
+            // 
+            this.MembersListBoxContextMS.ImageScalingSize = new System.Drawing.Size(24, 24);
+            this.MembersListBoxContextMS.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripMenuItemRemove});
+            this.MembersListBoxContextMS.Name = "MembersListBoxContextMS";
+            this.MembersListBoxContextMS.Size = new System.Drawing.Size(221, 36);
+            // 
+            // toolStripMenuItemRemove
+            // 
+            this.toolStripMenuItemRemove.Name = "toolStripMenuItemRemove";
+            this.toolStripMenuItemRemove.Size = new System.Drawing.Size(220, 32);
+            this.toolStripMenuItemRemove.Text = "Remove member";
+            this.toolStripMenuItemRemove.Click += new System.EventHandler(this.MembersStripMenuItemRemove_Click);
             // 
             // ExpensesListBox
             // 
@@ -314,6 +334,7 @@
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel1.PerformLayout();
             this.ExpensesBtnsTLP.ResumeLayout(false);
+            this.MembersListBoxContextMS.ResumeLayout(false);
             this.tableLayoutPanel2.ResumeLayout(false);
             this.tableLayoutPanel2.PerformLayout();
             this.ResumeLayout(false);
@@ -342,5 +363,7 @@
         private Button ExportExpensesBtn;
         private SaveFileDialog exportExpensesSaveFileDialog;
         private SaveFileDialog exportDebtsSaveFileDialog;
+        private ContextMenuStrip MembersListBoxContextMS;
+        private ToolStripMenuItem toolStripMenuItemRemove;
     }
 }

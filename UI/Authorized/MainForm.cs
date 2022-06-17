@@ -9,6 +9,7 @@ namespace Project.UI.Authorized
     public partial class MainForm : Form
     {
         public User User { get; set; }
+        public bool  LoggedAsAdmin { get=> selectedGroup.IsManagedBy(User); }
         private Group selectedGroup;
         public MainForm(User user)
         {
@@ -39,7 +40,7 @@ namespace Project.UI.Authorized
             MembersListBox.DataSource = selectedGroup.Members.ToList();
             ExpensesListBox.DataSource = selectedGroup.Expenses.Reverse().ToList();
 
-            AddMemberBtn.Enabled = selectedGroup.IsManagedBy(User);
+            AddMemberBtn.Enabled = LoggedAsAdmin;
             ExportExpensesBtn.Enabled = ExpensesListBox.Items.Count > 0;
 
         }
@@ -59,8 +60,34 @@ namespace Project.UI.Authorized
             await LoadDebtsListAsync();
         }
 
+        #region Dynamic init
+        private readonly string csvFilter = "csv files (*.csv)|*.csv|All files (*.*)|*.*";
+        // these need to be here as they are assigned dynamicaly 
+        private void InitializeImportExpensesOpenFile()
+        {
+            importExpensesOpenFileDialog.FileName = "";
+            importExpensesOpenFileDialog.Filter = csvFilter;
+            importExpensesOpenFileDialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+        }
+        private void InitializeExportExpenseSaveFile()
+        {
+            exportExpensesSaveFileDialog.FileName = $"Expenses-{selectedGroup}.csv";
+            exportExpensesSaveFileDialog.Filter = csvFilter;
+            exportExpensesSaveFileDialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+        }
+        private void InitializeExportDebtsSaveFile()
+        {
+            exportDebtsSaveFileDialog.FileName = $"Debts-{selectedGroup}.csv";
+            exportDebtsSaveFileDialog.Filter = csvFilter;
+            exportDebtsSaveFileDialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+        }
+        #endregion
 
         #region Event Handlers
+        private async void MainForm_Load(object sender, EventArgs e)
+        {
+            await RefreshGroupListAsync();
+        }
         private async void GroupSelectComb_SelectedIndexChanged(object sender, EventArgs e)
         {
             AddExpenseBtn.Enabled = true;
@@ -148,7 +175,7 @@ namespace Project.UI.Authorized
 
             await ShowErrorOnFail(iOManager.ExportDebts(debts));
         }
-        private void DebtsListBox_MouseDown(object sender, MouseEventArgs e)
+        private void SelectListBoxItemOnRightClick(object sender, MouseEventArgs e)
         {
             if (e.Button != MouseButtons.Right)
             {
@@ -161,7 +188,7 @@ namespace Project.UI.Authorized
             senderCasted.SelectedIndex = senderCasted.IndexFromPoint(e.Location);
         }
 
-        private void DebtsListBox_MouseUp(object sender, MouseEventArgs e)
+        private void ShowContextMSOnSelectedIndex(object sender, MouseEventArgs e)
         {
             if (e.Button != MouseButtons.Right)
             {
@@ -182,34 +209,26 @@ namespace Project.UI.Authorized
             await RefreshGroupAsync();
         }
 
+        private void MembersListBox_MouseUp(object sender, MouseEventArgs e)
+        {
+            if (e.Button != MouseButtons.Right)
+            {
+                return;
+            }
+            (sender as ListBox).ContextMenuStrip.Visible = LoggedAsAdmin 
+                && (sender as ListBox).SelectedIndex != ListBox.NoMatches 
+                // admin cannot remove themselves
+                && !(sender as ListBox).SelectedItem.Equals(selectedGroup.Admin); 
+        }
 
+        private async void MembersStripMenuItemRemove_Click(object sender, EventArgs e)
+        {
+            User user = (User)MembersListBox.SelectedItem;
+            GroupManager groupManager = new();
+
+            await ShowErrorOnFail(groupManager.RemoveUser(selectedGroup, user));
+        }
         #endregion
 
-
-        private readonly string csvFilter = "csv files (*.csv)|*.csv|All files (*.*)|*.*";
-        // these need to be here as they are assigned dynamicaly 
-        private void InitializeImportExpensesOpenFile()
-        {
-            importExpensesOpenFileDialog.FileName = "";
-            importExpensesOpenFileDialog.Filter = csvFilter;
-            importExpensesOpenFileDialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
-        }
-        private void InitializeExportExpenseSaveFile()
-        {
-            exportExpensesSaveFileDialog.FileName = $"Expenses-{selectedGroup}.csv";
-            exportExpensesSaveFileDialog.Filter = csvFilter;
-            exportExpensesSaveFileDialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
-        }
-        private void InitializeExportDebtsSaveFile()
-        {
-            exportDebtsSaveFileDialog.FileName = $"Debts-{selectedGroup}.csv";
-            exportDebtsSaveFileDialog.Filter = csvFilter;
-            exportDebtsSaveFileDialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
-        }
-
-        private async void MainForm_Load(object sender, EventArgs e)
-        {
-            await RefreshGroupListAsync();
-        }
     }
 }
