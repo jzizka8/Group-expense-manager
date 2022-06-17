@@ -39,7 +39,6 @@ namespace Project.BusinessLayer
 
             using var db = await Task.Run(() => new DataContext());
 
-
             var trackedGroup = await db.Groups.FindAsync(group.Id);
 
             var users = db.Users.Where(u => usernamesSplit.Contains(u.Username)).ToList();
@@ -78,6 +77,28 @@ namespace Project.BusinessLayer
                     .ThenInclude(e => e.Consumers)
                 .FirstOrDefaultAsync(g => g.Equals(group));
         }
+
+        public async Task RemoveUser(Group group, User user)
+        {
+            if (group.Admin.Equals(user))
+            {
+                throw new ArgumentException("Cannot remove the admin from the group ");
+            }
+            
+            using var db = await Task.Run(() => new DataContext());
+            var trackedGroup = await db.Groups.FindAsync(group.Id);
+            var trackedUser = await db.Users.FindAsync(user.Id);
+
+            trackedGroup.Members.Remove(trackedUser);
+            trackedUser.Groups.Remove(trackedGroup);
+
+            db.Update(trackedGroup);
+            db.Update(trackedUser);
+
+            await db.SaveChangesAsync();
+
+        }
+
     }
 
 }
