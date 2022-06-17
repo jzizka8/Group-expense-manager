@@ -227,6 +227,7 @@ namespace Project.UI.Authorized
             GroupManager groupManager = new();
 
             await ShowErrorOnFail(groupManager.RemoveUser(selectedGroup, user));
+            await RefreshGroupAsync();
         }
         #endregion
 
